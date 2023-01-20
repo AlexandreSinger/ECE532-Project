@@ -1,0 +1,19 @@
+#-----------------------------------------------------------
+# updatemem v2018.3 (64-bit)
+# SW Build 2405991 on Thu Dec  6 23:38:27 MST 2018
+# 
+# Start of session at: Tue Jan 24 13:47:58 2023
+# Process ID: 4348
+# Current directory: C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask
+# Command line: updatemem.exe -mode batch -source C:/Xilinx/SDK/2018.3/scripts/updatemem/main.tcl -notrace -tclargs -meminfo C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask/GroupTask.sdk/design_1_wrapper_hw_platform_0/design_1_wrapper.mmi -data C:/Xilinx/SDK/2018.3/data/embeddedsw/lib/microblaze/mb_bootloop_le.elf -proc design_1_i/microblaze_0 -bit C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask/GroupTask.sdk/design_1_wrapper_hw_platform_0/design_1_wrapper.bit -out C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask/GroupTask.sdk/design_1_wrapper_hw_platform_0/download.bit -force
+# Log file: C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask/updatemem.log
+# Journal file: C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask\updatemem.jou
+#-----------------------------------------------------------
+source C:/Xilinx/SDK/2018.3/scripts/updatemem/main.tcl -notrace
+ Loading bitfile C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask/GroupTask.sdk/design_1_wrapper_hw_platform_0/design_1_wrapper.bit
+Loading data files...
+Updating memory content...
+Creating bitstream...
+Writing bitstream C:/Users/arthu/Documents/ECE532/Tutorials/5_TCPClientUsingLWIP/GroupTask/GroupTask.sdk/design_1_wrapper_hw_platform_0/download.bit...
+  update_mem: Time (s): cpu = 00:00:17 ; elapsed = 00:00:18 . Memory (MB): peak = 524.234 ; gain = 461.512
+INFO: [Common 17-206] Exiting updatemem at Tue Jan 24 13:48:16 2023...
