@@ -1,0 +1,370 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port trigger_30 -pg 1 -y 8150 -defaultsOSRD
+preplace port trigger_19 -pg 1 -y 5730 -defaultsOSRD
+preplace port trigger_1 -pg 1 -y 2980 -defaultsOSRD
+preplace port sequencer_9_output -pg 1 -y 4910 -defaultsOSRD
+preplace port trigger_31 -pg 1 -y 8370 -defaultsOSRD
+preplace port sequencer_15_output -pg 1 -y 2470 -defaultsOSRD
+preplace port trigger_2 -pg 1 -y 4320 -defaultsOSRD
+preplace port sequencer_0_output -pg 1 -y 110 -defaultsOSRD
+preplace port DATA_O -pg 1 -y 3380 -defaultsOSRD
+preplace port trigger_20 -pg 1 -y 5950 -defaultsOSRD
+preplace port sequencer_16_output -pg 1 -y 2670 -defaultsOSRD
+preplace port trigger_3 -pg 1 -y 6470 -defaultsOSRD
+preplace port IIC_RTL -pg 1 -y 1080 -defaultsOSRD
+preplace port trigger_21 -pg 1 -y 6170 -defaultsOSRD
+preplace port trigger_4 -pg 1 -y 4670 -defaultsOSRD
+preplace port sequencer_7_output -pg 1 -y 4510 -defaultsOSRD
+preplace port sequencer_2_output -pg 1 -y 510 -defaultsOSRD
+preplace port MCLK -pg 1 -y 3480 -defaultsOSRD
+preplace port trigger_22 -pg 1 -y 6390 -defaultsOSRD
+preplace port sequencer_14_output -pg 1 -y 2270 -defaultsOSRD
+preplace port trigger_10 -pg 1 -y 2760 -defaultsOSRD
+preplace port trigger_5 -pg 1 -y 4810 -defaultsOSRD
+preplace port sequencer_3_output -pg 1 -y 710 -defaultsOSRD
+preplace port PS2_Data_0 -pg 1 -y 5610 -defaultsOSRD
+preplace port trigger_23 -pg 1 -y 6610 -defaultsOSRD
+preplace port trigger_11 -pg 1 -y 5040 -defaultsOSRD
+preplace port trigger_6 -pg 1 -y 4960 -defaultsOSRD
+preplace port BCLK -pg 1 -y 3360 -defaultsOSRD
+preplace port trigger_24 -pg 1 -y 6830 -defaultsOSRD
+preplace port trigger_12 -pg 1 -y 5890 -defaultsOSRD
+preplace port trigger_7 -pg 1 -y 5120 -defaultsOSRD
+preplace port SYSCLK -pg 1 -y 3290 -defaultsOSRD
+preplace port PS2_Clk_0 -pg 1 -y 5630 -defaultsOSRD
+preplace port usb_uart -pg 1 -y 5520 -defaultsOSRD
+preplace port trigger_25 -pg 1 -y 7050 -defaultsOSRD
+preplace port trigger_13 -pg 1 -y 6100 -defaultsOSRD
+preplace port trigger_8 -pg 1 -y 5250 -defaultsOSRD
+preplace port sequencer_10_output -pg 1 -y 1470 -defaultsOSRD
+preplace port sequencer_6_output -pg 1 -y 4290 -defaultsOSRD
+preplace port RESET -pg 1 -y 3210 -defaultsOSRD
+preplace port trigger_26 -pg 1 -y 7270 -defaultsOSRD
+preplace port trigger_14 -pg 1 -y 5490 -defaultsOSRD
+preplace port trigger_9 -pg 1 -y 6490 -defaultsOSRD
+preplace port sequencer_13_output -pg 1 -y 2070 -defaultsOSRD
+preplace port sequencer_12_output -pg 1 -y 1870 -defaultsOSRD
+preplace port sequencer_5_output -pg 1 -y 1270 -defaultsOSRD
+preplace port trigger_27 -pg 1 -y 7490 -defaultsOSRD
+preplace port trigger_15 -pg 1 -y 5700 -defaultsOSRD
+preplace port sequencer_11_output -pg 1 -y 1670 -defaultsOSRD
+preplace port sequencer_8_output -pg 1 -y 4710 -defaultsOSRD
+preplace port trigger_28 -pg 1 -y 7710 -defaultsOSRD
+preplace port trigger_16 -pg 1 -y 6080 -defaultsOSRD
+preplace port trigger_29 -pg 1 -y 7930 -defaultsOSRD
+preplace port trigger_17 -pg 1 -y 6450 -defaultsOSRD
+preplace port sequencer_1_output -pg 1 -y 310 -defaultsOSRD
+preplace port LRCLK -pg 1 -y 3340 -defaultsOSRD
+preplace port trigger_18 -pg 1 -y 5510 -defaultsOSRD
+preplace port sequencer_17_output -pg 1 -y 5280 -defaultsOSRD
+preplace port trigger_0 -pg 1 -y 3190 -defaultsOSRD
+preplace port sequencer_4_output -pg 1 -y 910 -defaultsOSRD
+preplace portBus mb_triggers -pg 1 -y 5780 -defaultsOSRD
+preplace inst AudioVoice_28 -pg 1 -lvl 2 -y 7690 -defaultsOSRD -resize 220 196
+preplace inst AudioVoice_29 -pg 1 -lvl 2 -y 7910 -defaultsOSRD -resize 220 196
+preplace inst AudioPulseGen_0 -pg 1 -lvl 1 -y 4820 -defaultsOSRD
+preplace inst rst_clk_wiz_1_12M -pg 1 -lvl 10 -y 3100 -defaultsOSRD
+preplace inst microblaze_0_axi_periph -pg 1 -lvl 10 -y 4420 -defaultsOSRD
+preplace inst Sequencer_0 -pg 1 -lvl 11 -y 110 -defaultsOSRD
+preplace inst AudioVoice_0 -pg 1 -lvl 2 -y 1530 -defaultsOSRD
+preplace inst Sequencer_1 -pg 1 -lvl 11 -y 310 -defaultsOSRD
+preplace inst axi_iic_0 -pg 1 -lvl 11 -y 1100 -defaultsOSRD
+preplace inst AudioVoice_1 -pg 1 -lvl 2 -y 1750 -defaultsOSRD
+preplace inst Sequencer_2 -pg 1 -lvl 11 -y 510 -defaultsOSRD
+preplace inst clk_wiz_1 -pg 1 -lvl 2 -y 1330 -defaultsOSRD
+preplace inst AudioVoice_2 -pg 1 -lvl 2 -y 1970 -defaultsOSRD
+preplace inst Sequencer_3 -pg 1 -lvl 11 -y 710 -defaultsOSRD
+preplace inst mixer_10 -pg 1 -lvl 4 -y 4750 -defaultsOSRD -resize 260 136
+preplace inst AudioVoice_30 -pg 1 -lvl 2 -y 8130 -defaultsOSRD -resize 220 196
+preplace inst AudioVoice_3 -pg 1 -lvl 2 -y 2190 -defaultsOSRD
+preplace inst Sequencer_4 -pg 1 -lvl 11 -y 910 -defaultsOSRD
+preplace inst mixer_11 -pg 1 -lvl 4 -y 5070 -defaultsOSRD -resize 260 136
+preplace inst mixer_0 -pg 1 -lvl 3 -y 4020 -defaultsOSRD
+preplace inst AudioVoice_31 -pg 1 -lvl 2 -y 8350 -defaultsOSRD -resize 220 196
+preplace inst AudioVoice_4 -pg 1 -lvl 2 -y 2410 -defaultsOSRD
+preplace inst Sequencer_5 -pg 1 -lvl 11 -y 1270 -defaultsOSRD
+preplace inst mixer_12 -pg 1 -lvl 5 -y 4290 -defaultsOSRD -resize 260 136
+preplace inst mixer_1 -pg 1 -lvl 3 -y 4180 -defaultsOSRD
+preplace inst mixer_13 -pg 1 -lvl 5 -y 4920 -defaultsOSRD -resize 260 136
+preplace inst mixer_2 -pg 1 -lvl 3 -y 4340 -defaultsOSRD
+preplace inst AudioVoice_5 -pg 1 -lvl 2 -y 2630 -defaultsOSRD
+preplace inst Sequencer_6 -pg 1 -lvl 11 -y 4290 -defaultsOSRD
+preplace inst mb_trigger_regs -pg 1 -lvl 11 -y 5770 -defaultsOSRD
+preplace inst microblaze_0_local_memory -pg 1 -lvl 10 -y 2940 -defaultsOSRD
+preplace inst mixer_14 -pg 1 -lvl 6 -y 4560 -defaultsOSRD -resize 260 136
+preplace inst mixer_3 -pg 1 -lvl 3 -y 4500 -defaultsOSRD
+preplace inst AudioVoice_6 -pg 1 -lvl 2 -y 2850 -defaultsOSRD
+preplace inst Sequencer_7 -pg 1 -lvl 11 -y 4510 -defaultsOSRD
+preplace inst mixer_15 -pg 1 -lvl 3 -y 5400 -defaultsOSRD -resize 260 136
+preplace inst microblaze_0 -pg 1 -lvl 9 -y 2940 -defaultsOSRD
+preplace inst mixer_4 -pg 1 -lvl 3 -y 4660 -defaultsOSRD
+preplace inst AudioVoice_7 -pg 1 -lvl 2 -y 3070 -defaultsOSRD
+preplace inst Sequencer_8 -pg 1 -lvl 11 -y 4710 -defaultsOSRD
+preplace inst axi_ps2_0 -pg 1 -lvl 11 -y 5620 -defaultsOSRD
+preplace inst mixer_16 -pg 1 -lvl 3 -y 5660 -defaultsOSRD -resize 260 136
+preplace inst mixer_5 -pg 1 -lvl 3 -y 4820 -defaultsOSRD
+preplace inst AudioVoice_8 -pg 1 -lvl 2 -y 3290 -defaultsOSRD
+preplace inst Sequencer_9 -pg 1 -lvl 11 -y 4910 -defaultsOSRD
+preplace inst mixer_17 -pg 1 -lvl 3 -y 6030 -defaultsOSRD -resize 260 136
+preplace inst mixer_6 -pg 1 -lvl 3 -y 4990 -defaultsOSRD
+preplace inst AudioVoice_9 -pg 1 -lvl 2 -y 3510 -defaultsOSRD
+preplace inst mixer_18 -pg 1 -lvl 3 -y 6480 -defaultsOSRD -resize 260 136
+preplace inst mixer_7 -pg 1 -lvl 3 -y 5150 -defaultsOSRD
+preplace inst mixer_19 -pg 1 -lvl 3 -y 6920 -defaultsOSRD -resize 260 136
+preplace inst mixer_8 -pg 1 -lvl 4 -y 4110 -defaultsOSRD -resize 260 136
+preplace inst axi_uartlite_0 -pg 1 -lvl 11 -y 5480 -defaultsOSRD
+preplace inst mixer_9 -pg 1 -lvl 4 -y 4430 -defaultsOSRD -resize 260 136
+preplace inst AudioVoice_10 -pg 1 -lvl 2 -y 3730 -defaultsOSRD
+preplace inst AudioVoice_11 -pg 1 -lvl 2 -y 3950 -defaultsOSRD
+preplace inst AudioVoice_12 -pg 1 -lvl 2 -y 4170 -defaultsOSRD
+preplace inst AudioVoice_13 -pg 1 -lvl 2 -y 4390 -defaultsOSRD
+preplace inst AudioVoice_14 -pg 1 -lvl 2 -y 4610 -defaultsOSRD
+preplace inst AudioVoice_15 -pg 1 -lvl 2 -y 4830 -defaultsOSRD
+preplace inst i2s_transmitter_0 -pg 1 -lvl 11 -y 3350 -defaultsOSRD
+preplace inst AudioVoice_16 -pg 1 -lvl 2 -y 5050 -defaultsOSRD
+preplace inst mixer_20 -pg 1 -lvl 3 -y 7390 -defaultsOSRD -resize 260 136
+preplace inst system_ila_1 -pg 1 -lvl 11 -y 5110 -defaultsOSRD
+preplace inst AudioVoice_17 -pg 1 -lvl 2 -y 5270 -defaultsOSRD
+preplace inst mixer_21 -pg 1 -lvl 3 -y 7790 -defaultsOSRD -resize 260 136
+preplace inst AudioVoice_18 -pg 1 -lvl 2 -y 5490 -defaultsOSRD -resize 220 196
+preplace inst mixer_22 -pg 1 -lvl 3 -y 8240 -defaultsOSRD -resize 260 136
+preplace inst AudioVoice_19 -pg 1 -lvl 2 -y 5710 -defaultsOSRD -resize 220 196
+preplace inst mixer_23 -pg 1 -lvl 4 -y 5510 -defaultsOSRD -resize 260 136
+preplace inst mixer_24 -pg 1 -lvl 4 -y 6290 -defaultsOSRD -resize 260 136
+preplace inst rst_clk_wiz_1_100M -pg 1 -lvl 4 -y 3080 -defaultsOSRD
+preplace inst mixer_25 -pg 1 -lvl 4 -y 7130 -defaultsOSRD -resize 260 136
+preplace inst microblaze_0_axi_intc -pg 1 -lvl 8 -y 2910 -defaultsOSRD
+preplace inst mixer_26 -pg 1 -lvl 4 -y 8070 -defaultsOSRD -resize 260 136
+preplace inst mixer_27 -pg 1 -lvl 5 -y 5850 -defaultsOSRD -resize 260 136
+preplace inst Sequencer_10 -pg 1 -lvl 11 -y 1470 -defaultsOSRD
+preplace inst sample_to_audio_stre_0 -pg 1 -lvl 10 -y 5730 -defaultsOSRD
+preplace inst mixer_28 -pg 1 -lvl 5 -y 7570 -defaultsOSRD -resize 260 136
+preplace inst Sequencer_11 -pg 1 -lvl 11 -y 1670 -defaultsOSRD
+preplace inst mixer_29 -pg 1 -lvl 6 -y 6510 -defaultsOSRD -resize 260 136
+preplace inst Sequencer_12 -pg 1 -lvl 11 -y 1870 -defaultsOSRD
+preplace inst AudioVoice_20 -pg 1 -lvl 2 -y 5930 -defaultsOSRD -resize 220 196
+preplace inst Sequencer_13 -pg 1 -lvl 11 -y 2070 -defaultsOSRD
+preplace inst AudioVoice_21 -pg 1 -lvl 2 -y 6150 -defaultsOSRD -resize 220 196
+preplace inst Sequencer_14 -pg 1 -lvl 11 -y 2270 -defaultsOSRD
+preplace inst AudioVoice_22 -pg 1 -lvl 2 -y 6370 -defaultsOSRD -resize 220 196
+preplace inst mdm_1 -pg 1 -lvl 8 -y 3100 -defaultsOSRD
+preplace inst Sequencer_15 -pg 1 -lvl 11 -y 2470 -defaultsOSRD
+preplace inst AudioVoice_23 -pg 1 -lvl 2 -y 6590 -defaultsOSRD -resize 220 196
+preplace inst Sequencer_16 -pg 1 -lvl 11 -y 2670 -defaultsOSRD
+preplace inst TempoGenerator_0 -pg 1 -lvl 11 -y 2870 -defaultsOSRD
+preplace inst AudioVoice_24 -pg 1 -lvl 2 -y 6810 -defaultsOSRD -resize 220 196
+preplace inst Sequencer_17 -pg 1 -lvl 11 -y 5280 -defaultsOSRD
+preplace inst AudioVoice_25 -pg 1 -lvl 2 -y 7030 -defaultsOSRD -resize 220 196
+preplace inst AudioVoice_26 -pg 1 -lvl 2 -y 7250 -defaultsOSRD -resize 220 196
+preplace inst mixer_30 -pg 1 -lvl 7 -y 5510 -defaultsOSRD -resize 260 136
+preplace inst AudioVoice_27 -pg 1 -lvl 2 -y 7470 -defaultsOSRD -resize 220 196
+preplace netloc microblaze_0_axi_periph_M02_AXI 1 10 1 3790
+preplace netloc microblaze_0_axi_periph_M16_AXI 1 1 10 -690 1210 N 1210 N 1210 N 1210 N 1210 N 1210 N 1210 N 1210 N 1210 3670
+preplace netloc microblaze_0_axi_periph_M47_AXI 1 1 10 -560 8470 NJ 8470 NJ 8470 NJ 8470 NJ 8470 NJ 8470 NJ 8470 NJ 8470 NJ 8470 3540
+preplace netloc microblaze_0_axi_periph_M39_AXI 1 10 1 3740
+preplace netloc AudioVoice_20_sample 1 2 1 280
+preplace netloc Sequencer_5_trigger 1 11 2 NJ 1270 N
+preplace netloc microblaze_0_axi_periph_M24_AXI 1 10 1 3570
+preplace netloc trigger_21_1 1 0 2 NJ 6170 NJ
+preplace netloc AudioVoice_25_sample 1 2 1 350
+preplace netloc AudioVoice_6_sample 1 2 1 410
+preplace netloc microblaze_0_axi_periph_M35_AXI 1 1 10 -700 8590 N 8590 N 8590 N 8590 N 8590 N 8590 N 8590 N 8590 N 8590 3680
+preplace netloc microblaze_0_axi_periph_M03_AXI 1 1 10 -550 1160 N 1160 N 1160 N 1160 N 1160 N 1160 N 1160 N 1160 N 1160 3540
+preplace netloc mixer_21_output_sample 1 3 1 900
+preplace netloc mixer_13_output_sample 1 5 1 1640
+preplace netloc trigger_1_1 1 0 2 NJ 2980 -850
+preplace netloc mixer_12_output_sample 1 5 1 1660
+preplace netloc microblaze_0_axi_periph_M01_AXI 1 10 1 3710
+preplace netloc microblaze_0_axi_periph_M21_AXI 1 10 1 3740
+preplace netloc microblaze_0_axi_periph_M23_AXI 1 10 1 3790
+preplace netloc trigger_23_1 1 0 2 NJ 6610 NJ
+preplace netloc mixer_24_output_sample 1 4 1 1340
+preplace netloc AudioVoice_11_sample 1 2 1 350
+preplace netloc axi_iic_0_IIC 1 11 2 NJ 1080 N
+preplace netloc trigger_29_1 1 0 2 NJ 7930 NJ
+preplace netloc AudioVoice_5_sample 1 2 1 420
+preplace netloc Sequencer_0_trigger 1 11 2 NJ 110 N
+preplace netloc microblaze_0_dlmb_1 1 9 1 3120
+preplace netloc microblaze_0_intc_axi 1 7 4 2330 2770 NJ 2770 NJ 2770 3520
+preplace netloc mixer_25_output_sample 1 4 1 1300
+preplace netloc mixer_3_output_sample 1 3 1 900
+preplace netloc trigger_19_1 1 0 2 NJ 5730 NJ
+preplace netloc AudioVoice_16_sample 1 2 1 290
+preplace netloc microblaze_0_axi_periph_M17_AXI 1 10 1 3690
+preplace netloc i2s_transmitter_0_lrclk_out 1 0 13 -1130 1140 N 1140 490 2760 N 2760 N 2760 N 2760 N 2760 N 2760 N 2760 NJ 2760 3860J 2990 4220 3340 N
+preplace netloc rst_clk_wiz_1_100M_mb_reset 1 4 5 NJ 3040 N 3040 N 3040 2290 2800 2600J
+preplace netloc mixer_9_output_sample 1 4 1 1300
+preplace netloc microblaze_0_axi_periph_M30_AXI 1 10 1 3560
+preplace netloc trigger_25_1 1 0 2 NJ 7050 NJ
+preplace netloc trigger_20_1 1 0 2 NJ 5950 NJ
+preplace netloc AudioVoice_27_sample 1 2 1 490
+preplace netloc AudioVoice_17_sample 1 2 1 280
+preplace netloc AudioPulseGen_0_audio_pulse 1 1 10 -760 8650 460 5760 N 5760 N 5760 N 5760 N 5760 N 5760 N 5760 3140 2850 3840
+preplace netloc microblaze_0_axi_periph_M46_AXI 1 1 10 -610 8520 NJ 8520 NJ 8520 NJ 8520 NJ 8520 NJ 8520 NJ 8520 NJ 8520 NJ 8520 3600
+preplace netloc AudioVoice_4_sample 1 2 1 430
+preplace netloc mixer_0_output_sample 1 3 1 950
+preplace netloc trigger_12_1 1 0 2 -1180J 4720 -720
+preplace netloc microblaze_0_axi_periph_M44_AXI 1 1 10 -650 8640 NJ 8640 NJ 8640 NJ 8640 NJ 8640 NJ 8640 NJ 8640 NJ 8640 NJ 8640 3630
+preplace netloc trigger_11_1 1 0 2 -1200J 4710 -730
+preplace netloc trigger_15_1 1 0 2 -1160J 5480 -750
+preplace netloc rst_clk_wiz_1_100M_bus_struct_reset 1 4 6 1310J 2780 NJ 2780 NJ 2780 NJ 2780 2610J 2800 3170
+preplace netloc microblaze_0_axi_periph_M14_AXI 1 1 10 -730 1130 N 1130 N 1130 N 1130 N 1130 N 1130 N 1130 N 1130 N 1130 3680
+preplace netloc AudioVoice_21_sample 1 2 1 280
+preplace netloc Sequencer_10_trigger 1 11 2 NJ 1470 N
+preplace netloc microblaze_0_axi_periph_M55_AXI 1 10 1 3720
+preplace netloc trigger_24_1 1 0 2 NJ 6830 NJ
+preplace netloc trigger_7_1 1 0 2 -1220J 4680 -790
+preplace netloc Sequencer_11_trigger 1 11 2 NJ 1670 N
+preplace netloc Sequencer_9_trigger 1 11 2 NJ 4910 N
+preplace netloc microblaze_0_ilmb_1 1 9 1 3160
+preplace netloc microblaze_0_axi_periph_M12_AXI 1 1 10 -560 1240 N 1240 N 1240 N 1240 N 1240 N 1240 N 1240 N 1240 N 1240 3550
+preplace netloc microblaze_0_axi_periph_M08_AXI 1 1 10 -650 1120 N 1120 N 1120 N 1120 N 1120 N 1120 N 1120 N 1120 N 1120 3620
+preplace netloc microblaze_0_axi_periph_M28_AXI 1 10 1 3820
+preplace netloc microblaze_0_axi_periph_M40_AXI 1 1 10 -690 8600 NJ 8600 NJ 8600 NJ 8600 NJ 8600 NJ 8600 NJ 8600 NJ 8600 NJ 8600 3670
+preplace netloc microblaze_0_axi_periph_M49_AXI 1 1 10 -600 8530 NJ 8530 NJ 8530 NJ 8530 NJ 8530 NJ 8530 NJ 8530 NJ 8530 NJ 8530 3590
+preplace netloc trigger_0_1 1 0 2 -1240J 2970 -860
+preplace netloc rst_clk_wiz_1_12M_peripheral_reset 1 10 1 3840
+preplace netloc microblaze_0_axi_periph_M29_AXI 1 10 1 3830
+preplace netloc microblaze_0_interrupt 1 8 1 N
+preplace netloc mixer_6_output_sample 1 3 1 900
+preplace netloc trigger_6_1 1 0 2 -1230J 4670 -800
+preplace netloc AudioVoice_22_sample 1 2 1 280
+preplace netloc mdm_1_debug_sys_rst 1 3 6 960J 3200 NJ 3200 NJ 3200 NJ 3200 NJ 3200 2580
+preplace netloc SYSCLK_1 1 0 2 -1230J 2960 -870
+preplace netloc microblaze_0_axi_periph_M13_AXI 1 1 10 -640 1200 N 1200 N 1200 N 1200 N 1200 N 1200 N 1200 N 1200 N 1200 3610
+preplace netloc microblaze_0_axi_periph_M36_AXI 1 10 1 3850
+preplace netloc microblaze_0_axi_periph_M41_AXI 1 1 10 -680 8610 NJ 8610 NJ 8610 NJ 8610 NJ 8610 NJ 8610 NJ 8610 NJ 8610 NJ 8610 3660
+preplace netloc AudioVoice_29_sample 1 2 1 490
+preplace netloc AudioVoice_19_sample 1 2 1 280
+preplace netloc AudioVoice_2_sample 1 2 1 450
+preplace netloc mixer_5_output_sample 1 3 1 900
+preplace netloc microblaze_0_axi_periph_M18_AXI 1 10 1 3700
+preplace netloc mixer_8_output_sample 1 4 1 1340
+preplace netloc Sequencer_2_trigger 1 11 2 NJ 510 N
+preplace netloc microblaze_0_axi_periph_M38_AXI 1 10 1 3880
+preplace netloc axi_uartlite_0_UART 1 11 2 N 5470 4340
+preplace netloc microblaze_0_axi_periph_M56_AXI 1 10 1 3710
+preplace netloc microblaze_0_axi_periph_M54_AXI 1 10 1 3730
+preplace netloc microblaze_0_axi_periph_M50_AXI 1 1 10 -590 8540 NJ 8540 NJ 8540 NJ 8540 NJ 8540 NJ 8540 NJ 8540 NJ 8540 NJ 8540 3580
+preplace netloc trigger_31_1 1 0 2 NJ 8370 NJ
+preplace netloc trigger_27_1 1 0 2 NJ 7490 NJ
+preplace netloc trigger_18_1 1 0 2 NJ 5510 NJ
+preplace netloc AudioVoice_24_sample 1 2 1 280
+preplace netloc AudioVoice_13_sample 1 2 1 320
+preplace netloc trigger_10_1 1 0 2 -1220J 4660 -770
+preplace netloc trigger_9_1 1 0 2 -1150J 4700 -740
+preplace netloc microblaze_0_axi_periph_M37_AXI 1 10 1 3870
+preplace netloc microblaze_0_axi_periph_M27_AXI 1 10 1 3770
+preplace netloc mixer_17_output_sample 1 3 1 900
+preplace netloc Sequencer_13_trigger 1 11 2 NJ 2070 N
+preplace netloc microblaze_0_Clk 1 0 11 -1120 4750 -780 1220 360 3040 930 4260 1330 4470 1670 4470 1980 2940 2300 2790 2620 2790 3130 2830 3810
+preplace netloc AudioVoice_18_sample 1 2 1 280
+preplace netloc trigger_16_1 1 0 2 -1130J 5490 -740
+preplace netloc mixer_26_output_sample 1 4 1 1320
+preplace netloc AudioVoice_28_sample 1 2 1 280
+preplace netloc AudioVoice_10_sample 1 2 1 370
+preplace netloc mixer_4_output_sample 1 3 1 920
+preplace netloc mixer_30_output_sample 1 7 3 2290 5750 NJ 5750 3170J
+preplace netloc Sequencer_6_trigger 1 11 2 NJ 4290 N
+preplace netloc mixer_1_output_sample 1 3 1 900
+preplace netloc i2s_transmitter_0_sdata_0_out 1 11 2 NJ 3380 N
+preplace netloc microblaze_0_axi_periph_M33_AXI 1 1 10 -720 8570 N 8570 N 8570 N 8570 N 8570 N 8570 N 8570 N 8570 N 8570 3700
+preplace netloc mixer_20_output_sample 1 3 1 960
+preplace netloc trigger_14_1 1 0 2 -1170J 4740 -650
+preplace netloc trigger_5_1 1 0 2 -1240J 4650 -810
+preplace netloc mixer_10_output_sample 1 4 1 1320
+preplace netloc trigger_13_1 1 0 2 -1140J 4730 -670
+preplace netloc mixer_22_output_sample 1 3 1 930
+preplace netloc mixer_18_output_sample 1 3 1 960
+preplace netloc RESET_1 1 0 10 -1250 2950 -880 1150 N 1150 950J 3180 NJ 3180 NJ 3180 NJ 3180 2320J 3030 2570J 3040 3110J
+preplace netloc microblaze_0_axi_periph_M11_AXI 1 1 10 -570 1230 N 1230 N 1230 N 1230 N 1230 N 1230 N 1230 N 1230 N 1230 3570
+preplace netloc microblaze_0_axi_periph_M10_AXI 1 1 10 -590 1190 N 1190 N 1190 N 1190 N 1190 N 1190 N 1190 N 1190 N 1190 3590
+preplace netloc AudioVoice_0_sample 1 2 1 470
+preplace netloc clk_wiz_1_locked 1 2 8 480 2750 940J 3190 NJ 3190 NJ 3190 NJ 3190 NJ 3190 2610J 3140 NJ
+preplace netloc microblaze_0_debug 1 8 1 2590
+preplace netloc microblaze_0_axi_periph_M09_AXI 1 1 10 -600 1180 N 1180 N 1180 N 1180 N 1180 N 1180 N 1180 N 1180 N 1180 3600
+preplace netloc microblaze_0_axi_periph_M25_AXI 1 10 1 3790
+preplace netloc microblaze_0_axi_periph_M22_AXI 1 10 1 3750
+preplace netloc microblaze_0_axi_periph_M43_AXI 1 1 10 -660 8630 NJ 8630 NJ 8630 NJ 8630 NJ 8630 NJ 8630 NJ 8630 NJ 8630 NJ 8630 3640
+preplace netloc trigger_30_1 1 0 2 NJ 8150 NJ
+preplace netloc mixer_19_output_sample 1 3 1 900
+preplace netloc AudioVoice_30_sample 1 2 1 280
+preplace netloc AudioVoice_3_sample 1 2 1 440
+preplace netloc Sequencer_17_trigger 1 11 2 NJ 5280 N
+preplace netloc trigger_8_1 1 0 2 -1210J 4690 -750
+preplace netloc microblaze_0_axi_dp 1 9 1 3120
+preplace netloc microblaze_0_axi_periph_M32_AXI 1 1 10 -640 8500 N 8500 N 8500 N 8500 N 8500 N 8500 N 8500 N 8500 N 8500 3620
+preplace netloc microblaze_0_axi_periph_M45_AXI 1 1 10 -620 8510 NJ 8510 NJ 8510 NJ 8510 NJ 8510 NJ 8510 NJ 8510 NJ 8510 NJ 8510 3610
+preplace netloc mb_trigger_regs_gpio_io_o 1 11 2 N 5780 N
+preplace netloc Sequencer_14_trigger 1 11 2 NJ 2270 N
+preplace netloc trigger_3_1 1 0 2 -1190J 4630 -830
+preplace netloc microblaze_0_axi_periph_M34_AXI 1 1 10 -710 8580 N 8580 N 8580 N 8580 N 8580 N 8580 N 8580 N 8580 N 8580 3690
+preplace netloc axi_ps2_0_PS2_interrupt 1 7 5 2330 5850 NJ 5850 NJ 5850 NJ 5850 4220
+preplace netloc axis_interconnect_0_M00_AXIS 1 10 1 3890
+preplace netloc microblaze_0_axi_periph_M51_AXI 1 1 10 -580 8550 NJ 8550 NJ 8550 NJ 8550 NJ 8550 NJ 8550 NJ 8550 NJ 8550 NJ 8550 3570
+preplace netloc AudioVoice_7_sample 1 2 1 400
+preplace netloc microblaze_0_axi_periph_M52_AXI 1 1 10 -570 8560 NJ 8560 NJ 8560 NJ 8560 NJ 8560 NJ 8560 NJ 8560 NJ 8560 NJ 8560 3550
+preplace netloc AudioVoice_15_sample 1 2 1 300
+preplace netloc AudioVoice_14_sample 1 2 1 310
+preplace netloc mixer_2_output_sample 1 3 1 960
+preplace netloc Sequencer_16_trigger 1 11 2 NJ 2670 N
+preplace netloc trigger_17_1 1 0 2 -1120J 5500 -730
+preplace netloc Sequencer_4_trigger 1 11 2 NJ 910 N
+preplace netloc TempoGenerator_0_tempo_pulse 1 10 2 3900 2980 4220
+preplace netloc microblaze_0_axi_periph_M20_AXI 1 10 1 3730
+preplace netloc microblaze_0_axi_periph_M06_AXI 1 1 10 -670 1100 N 1100 N 1100 N 1100 N 1100 N 1100 N 1100 N 1100 N 1100 3640
+preplace netloc axi_ps2_0_PS2_Clk 1 11 2 NJ 5620 4340
+preplace netloc mixer_15_output_sample 1 3 1 900
+preplace netloc AudioVoice_9_sample 1 2 1 380
+preplace netloc AudioVoice_8_sample 1 2 1 390
+preplace netloc clk_wiz_1_clk_out2 1 2 11 N 1330 NJ 1330 NJ 1330 NJ 1330 NJ 1330 NJ 1330 NJ 1330 3180 2820 3780 3480 NJ 3480 NJ
+preplace netloc microblaze_0_axi_periph_M31_AXI 1 10 1 3800
+preplace netloc trigger_28_1 1 0 2 NJ 7710 NJ
+preplace netloc mixer_16_output_sample 1 3 1 920
+preplace netloc trigger_2_1 1 0 2 NJ 4320 -840
+preplace netloc microblaze_0_axi_periph_M04_AXI 1 1 10 -540 1170 N 1170 N 1170 N 1170 N 1170 N 1170 N 1170 N 1170 N 1170 3530
+preplace netloc mixer_27_output_sample 1 5 1 1640
+preplace netloc i2s_transmitter_0_sclk_out 1 11 2 NJ 3360 N
+preplace netloc trigger_22_1 1 0 2 NJ 6390 NJ
+preplace netloc AudioVoice_23_sample 1 2 1 350
+preplace netloc Sequencer_12_trigger 1 11 2 NJ 1870 N
+preplace netloc Sequencer_3_trigger 1 11 2 NJ 710 N
+preplace netloc AudioVoice_12_sample 1 2 1 330
+preplace netloc AudioVoice_1_sample 1 2 1 460
+preplace netloc mixer_11_output_sample 1 4 1 1320
+preplace netloc microblaze_0_axi_periph_M07_AXI 1 1 10 -660 1110 N 1110 N 1110 N 1110 N 1110 N 1110 N 1110 N 1110 N 1110 3630
+preplace netloc mixer_28_output_sample 1 5 1 1660
+preplace netloc mixer_23_output_sample 1 4 1 1300
+preplace netloc Sequencer_1_trigger 1 11 2 NJ 310 N
+preplace netloc microblaze_0_axi_periph_M19_AXI 1 10 1 3720
+preplace netloc AudioVoice_31_sample 1 2 1 490
+preplace netloc ARESETN_1 1 4 6 1340J 3050 NJ 3050 NJ 3050 2300J 3020 2580J 3030 3100
+preplace netloc trigger_4_1 1 0 2 -1250J 4640 -820
+preplace netloc microblaze_0_axi_periph_M48_AXI 1 1 10 -550 8480 NJ 8480 NJ 8480 NJ 8480 NJ 8480 NJ 8480 NJ 8480 NJ 8480 NJ 8480 3530
+preplace netloc mixer_29_output_sample 1 6 1 1990
+preplace netloc AudioVoice_26_sample 1 2 1 280
+preplace netloc mixer_14_output_sample 1 6 1 1970J
+preplace netloc Sequencer_8_trigger 1 11 2 NJ 4710 N
+preplace netloc microblaze_0_axi_periph_M15_AXI 1 1 10 -580 1250 N 1250 N 1250 N 1250 N 1250 N 1250 N 1250 N 1250 N 1250 3580
+preplace netloc microblaze_0_axi_periph_M53_AXI 1 1 10 -540 8490 NJ 8490 NJ 8490 NJ 8490 NJ 8490 NJ 8490 NJ 8490 NJ 8490 NJ 8490 3520
+preplace netloc microblaze_0_axi_periph_M05_AXI 1 1 10 -680 1090 N 1090 N 1090 N 1090 N 1090 N 1090 N 1090 N 1090 N 1090 3660
+preplace netloc trigger_26_1 1 0 2 NJ 7270 NJ
+preplace netloc Sequencer_7_trigger 1 11 2 NJ 4510 N
+preplace netloc Sequencer_15_trigger 1 11 2 NJ 2470 N
+preplace netloc mixer_7_output_sample 1 3 1 900
+preplace netloc microblaze_0_axi_periph_M26_AXI 1 10 1 3750
+preplace netloc microblaze_0_axi_periph_M42_AXI 1 1 10 -670 8620 NJ 8620 NJ 8620 NJ 8620 NJ 8620 NJ 8620 NJ 8620 NJ 8620 NJ 8620 3650
+preplace netloc axi_ps2_0_PS2_Data 1 11 2 NJ 5600 4340
+preplace netloc rst_clk_wiz_1_100M_peripheral_aresetn 1 1 10 -630 1410 340 3930 910 3930 1310 4550 1650 5500 1980 5600 2310 5440 N 5440 3150 2840 3760
+levelinfo -pg 1 -1270 -990 150 750 1130 1490 1820 2140 2450 2860 3350 4080 4320 4430 -top 0 -bot 8710
+"
+}
+{
+   "da_axi4_cnt":"3",
+   "da_board_cnt":"1",
+   "da_clkrst_cnt":"142",
+   "da_mb_cnt":"2"
+}

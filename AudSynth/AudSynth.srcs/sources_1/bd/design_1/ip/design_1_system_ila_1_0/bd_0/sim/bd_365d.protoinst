@@ -1,0 +1,32 @@
+{
+	"version": "1.0",
+	"modules": {
+		"bd_365d": {
+			"proto_instances": {
+				"/g_inst/slot_0_axis": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "aclk"},
+						"ARESETN": { "actual": "aresetn"},
+						"TDATA": { "actual": "slot_0_axis_tdata"},
+						"TID": { "actual": "slot_0_axis_tid"},
+						"TLAST": { "actual": "slot_0_axis_tlast"},
+						"TREADY": { "actual": "slot_0_axis_tready"},
+						"TVALID": { "actual": "slot_0_axis_tvalid"}
+					}
+				},
+				"/slot_0_apcs/PC_AXIS": {
+					"interface": "xilinx.com:interface:axis:1.0",
+					"ports": {
+						"ACLK": { "actual": "aclk"},
+						"ARESETN": { "actual": "aresetn"},
+						"TDATA": { "actual": "pc_axis_tdata"},
+						"TID": { "actual": "pc_axis_tid"},
+						"TREADY": { "actual": "pc_axis_tready"},
+						"TVALID": { "actual": "pc_axis_tvalid"}
+					}
+				}
+			}
+		}
+	}
+}

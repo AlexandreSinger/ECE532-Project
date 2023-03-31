@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER TempoGenerator
+	OPTION supported_peripherals = (TempoGenerator);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = TempoGenerator;
+END DRIVER

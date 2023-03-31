@@ -1,0 +1,1581 @@
+/*
+ *
+ * Xilinx, Inc.
+ * XILINX IS PROVIDING THIS DESIGN, CODE, OR INFORMATION "AS IS" AS A 
+ * COURTESY TO YOU.  BY PROVIDING THIS DESIGN, CODE, OR INFORMATION AS
+ * ONE POSSIBLE   IMPLEMENTATION OF THIS FEATURE, APPLICATION OR 
+ * STANDARD, XILINX IS MAKING NO REPRESENTATION THAT THIS IMPLEMENTATION 
+ * IS FREE FROM ANY CLAIMS OF INFRINGEMENT, AND YOU ARE RESPONSIBLE 
+ * FOR OBTAINING ANY RIGHTS YOU MAY REQUIRE FOR YOUR IMPLEMENTATION
+ * XILINX EXPRESSLY DISCLAIMS ANY WARRANTY WHATSOEVER WITH RESPECT TO 
+ * THE ADEQUACY OF THE IMPLEMENTATION, INCLUDING BUT NOT LIMITED TO 
+ * ANY WARRANTIES OR REPRESENTATIONS THAT THIS IMPLEMENTATION IS FREE 
+ * FROM CLAIMS OF INFRINGEMENT, IMPLIED WARRANTIES OF MERCHANTABILITY 
+ * AND FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/*
+ * 
+ *
+ * This file is a generated sample test application.
+ *
+ * This application is intended to test and/or illustrate some 
+ * functionality of your system.  The contents of this file may
+ * vary depending on the IP in your system and may use existing
+ * IP driver functions.  These drivers will be generated in your
+ * SDK application project when you run the "Generate Libraries" menu item.
+ *
+ */
+
+#include <stdio.h>
+#include "xparameters.h"
+#include "xil_cache.h"
+#include "xintc.h"
+#include "intc_header.h"
+#include "xi2stx_header.h"
+#include "xgpio.h"
+#include "gpio_header.h"
+#include "iic_header.h"
+#include "xil_printf.h"
+#include "xiic_l.h"
+#include "xi2stx.h"
+#include "math.h"
+
+#define sampling_rate 96000
+
+//Boiler Plate code from DMA Audio Project by Digilent below
+//Audio controller registers
+#define AUDIO_CTL_ADDR			XPAR_I2S_TRANSMITTER_0_BASEADDR
+enum i2sRegisters {
+	I2S_CORE_VERSION			= AUDIO_CTL_ADDR,
+	I2S_CORE_CONFIG         	= AUDIO_CTL_ADDR + 0x04,
+	I2S_CORE_ENABLE		      	= AUDIO_CTL_ADDR + 0x08,
+	I2S_VALIDITY_REG         	= AUDIO_CTL_ADDR + 0x0c,
+	I2S_INTERRUPT_CTRL_REG     	= AUDIO_CTL_ADDR + 0x10,
+	I2S_INTERRUPT_STATUS_REG   	= AUDIO_CTL_ADDR + 0x14,
+	I2S_TIMING_CONTROL_REG     	= AUDIO_CTL_ADDR + 0x20,
+	I2S_CH_0and1_CTL_REG       	= AUDIO_CTL_ADDR + 0x30,
+};
+
+//ADAU internal register addresses
+enum adauRegisterAdresses {
+	R0_CLOCK_CONTROL								= 0x00,
+	R1_PLL_CONTROL 									= 0x02,
+	R2_DIGITAL_MIC_JACK_DETECTION_CONTROL 			= 0x08,
+	R3_RECORD_POWER_MANAGEMENT						= 0x09,
+	R4_RECORD_MIXER_LEFT_CONTROL_0 					= 0x0A,
+	R5_RECORD_MIXER_LEFT_CONTROL_1 					= 0x0B,
+	R6_RECORD_MIXER_RIGHT_CONTROL_0 				= 0x0C,
+	R7_RECORD_MIXER_RIGHT_CONTROL_1 				= 0x0D,
+	R8_LEFT_DIFFERENTIAL_INPUT_VOLUME_CONTROL 		= 0x0E,
+	R9_RIGHT_DIFFERENTIAL_INPUT_VOLUME_CONTROL 		= 0x0F,
+	R10_RECORD_MICROPHONE_BIAS_CONTROL 				= 0x10,
+	R11_ALC_CONTROL_0								= 0x11,
+	R12_ALC_CONTROL_1								= 0x12,
+	R13_ALC_CONTROL_2								= 0x13,
+	R14_ALC_CONTROL_3								= 0x14,
+	R15_SERIAL_PORT_CONTROL_0 						= 0x15,
+	R16_SERIAL_PORT_CONTROL_1 						= 0x16,
+	R17_CONVERTER_CONTROL_0 						= 0x17,
+	R18_CONVERTER_CONTROL_1 						= 0x18,
+	R19_ADC_CONTROL									= 0x19,
+	R20_LEFT_INPUT_DIGITAL_VOLUME 					= 0x1A,
+	R21_RIGHT_INPUT_DIGITAL_VOLUME 					= 0x1B,
+	R22_PLAYBACK_MIXER_LEFT_CONTROL_0 				= 0x1C,
+	R23_PLAYBACK_MIXER_LEFT_CONTROL_1 				= 0x1D,
+	R24_PLAYBACK_MIXER_RIGHT_CONTROL_0 				= 0x1E,
+	R25_PLAYBACK_MIXER_RIGHT_CONTROL_1 				= 0x1F,
+	R26_PLAYBACK_LR_MIXER_LEFT_LINE_OUTPUT_CONTROL 	= 0x20,
+	R27_PLAYBACK_LR_MIXER_RIGHT_LINE_OUTPUT_CONTROL = 0x21,
+	R28_PLAYBACK_LR_MIXER_MONO_OUTPUT_CONTROL 		= 0x22,
+	R29_PLAYBACK_HEADPHONE_LEFT_VOLUME_CONTROL 		= 0x23,
+	R30_PLAYBACK_HEADPHONE_RIGHT_VOLUME_CONTROL 	= 0x24,
+	R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL 	= 0x25,
+	R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL 	= 0x26,
+	R33_PLAYBACK_MONO_OUTPUT_CONTROL 				= 0x27,
+	R34_PLAYBACK_POP_CLICK_SUPPRESSION 				= 0x28,
+	R35_PLAYBACK_POWER_MANAGEMENT 					= 0x29,
+	R36_DAC_CONTROL_0 								= 0x2A,
+	R37_DAC_CONTROL_1 								= 0x2B,
+	R38_DAC_CONTROL_2 								= 0x2C,
+	R39_SERIAL_PORT_PAD_CONTROL 					= 0x2D,
+	R40_CONTROL_PORT_PAD_CONTROL_0 					= 0x2F,
+	R41_CONTROL_PORT_PAD_CONTROL_1 					= 0x30,
+	R42_JACK_DETECT_PIN_CONTROL 					= 0x31,
+	R67_DEJITTER_CONTROL 							= 0x36,
+	R58_SERIAL_INPUT_ROUTE_CONTROL					= 0xF2,
+	R59_SERIAL_OUTPUT_ROUTE_CONTROL					= 0xF3,
+	R60_SERIAL_DATA_GPIO_CONGIURATION				= 0xF4,
+	R61_DSP_ENABLE									= 0xF5,
+	R62_DSP_RUN										= 0xF6,
+	R63_DSP_SLEW_MODES								= 0xF7,
+	R64_SERIAL_PORT_SAMPLING_RATE 					= 0xF8,
+	R65_CLOCK_ENABLE_0 								= 0xF9,
+	R66_CLOCK_ENABLE_1 								= 0xFA
+};
+
+//Tempo Generator Registers
+#define Tempo_Generator			XPAR_TEMPOGENERATOR_0_S00_AXI_BASEADDR
+enum Tempo_Generator_Registers {
+	TEMPO	= Tempo_Generator
+};
+
+//Audio controller registers
+#define Audio_Voice_0			XPAR_AUDIOVOICE_0_S00_AXI_BASEADDR
+enum Audio_Voice_0_Registers {
+	AUDIO_VOICE_0_WAVE_SLC		= Audio_Voice_0,
+	AUDIO_VOICE_0_PITCH         = Audio_Voice_0 + 0x04,
+	AUDIO_VOICE_0_ATTACK	    = Audio_Voice_0 + 0x08,
+	AUDIO_VOICE_0_DECAY         = Audio_Voice_0 + 0x0c,
+	AUDIO_VOICE_0_SUSTAIN     	= Audio_Voice_0 + 0x10,
+	AUDIO_VOICE_0_SUS_DURATION  = Audio_Voice_0 + 0x14,
+	AUDIO_VOICE_0_RELEASE     	= Audio_Voice_0 + 0x20,
+	AUDIO_VOICE_0_VOLUME       	= Audio_Voice_0 + 0x30,
+};
+
+#define Audio_Voice_1			XPAR_AUDIOVOICE_1_S00_AXI_BASEADDR
+enum Audio_Voice_1_Registers {
+	AUDIO_VOICE_1_WAVE_SLC		= Audio_Voice_1,
+	AUDIO_VOICE_1_PITCH         = Audio_Voice_1 + 0x04,
+	AUDIO_VOICE_1_ATTACK	    = Audio_Voice_1 + 0x08,
+	AUDIO_VOICE_1_DECAY         = Audio_Voice_1 + 0x0c,
+	AUDIO_VOICE_1_SUSTAIN     	= Audio_Voice_1 + 0x10,
+	AUDIO_VOICE_1_SUS_DURATION  = Audio_Voice_1 + 0x14,
+	AUDIO_VOICE_1_RELEASE     	= Audio_Voice_1 + 0x20,
+	AUDIO_VOICE_1_VOLUME       	= Audio_Voice_1 + 0x30,
+};
+
+#define Audio_Voice_2			XPAR_AUDIOVOICE_2_S00_AXI_BASEADDR
+enum Audio_Voice_2_Registers {
+	AUDIO_VOICE_2_WAVE_SLC		= Audio_Voice_2,
+	AUDIO_VOICE_2_PITCH         = Audio_Voice_2 + 0x04,
+	AUDIO_VOICE_2_ATTACK	    = Audio_Voice_2 + 0x08,
+	AUDIO_VOICE_2_DECAY         = Audio_Voice_2 + 0x0c,
+	AUDIO_VOICE_2_SUSTAIN     	= Audio_Voice_2 + 0x10,
+	AUDIO_VOICE_2_SUS_DURATION  = Audio_Voice_2 + 0x14,
+	AUDIO_VOICE_2_RELEASE     	= Audio_Voice_2 + 0x20,
+	AUDIO_VOICE_2_VOLUME       	= Audio_Voice_2 + 0x30,
+};
+
+#define Audio_Voice_3			XPAR_AUDIOVOICE_3_S00_AXI_BASEADDR
+enum Audio_Voice_3_Registers {
+	AUDIO_VOICE_3_WAVE_SLC		= Audio_Voice_3,
+	AUDIO_VOICE_3_PITCH         = Audio_Voice_3 + 0x04,
+	AUDIO_VOICE_3_ATTACK	    = Audio_Voice_3 + 0x08,
+	AUDIO_VOICE_3_DECAY         = Audio_Voice_3 + 0x0c,
+	AUDIO_VOICE_3_SUSTAIN     	= Audio_Voice_3 + 0x10,
+	AUDIO_VOICE_3_SUS_DURATION  = Audio_Voice_3 + 0x14,
+	AUDIO_VOICE_3_RELEASE     	= Audio_Voice_3 + 0x20,
+	AUDIO_VOICE_3_VOLUME       	= Audio_Voice_3 + 0x30,
+};
+
+#define Audio_Voice_4			XPAR_AUDIOVOICE_4_S00_AXI_BASEADDR
+enum Audio_Voice_4_Registers {
+	AUDIO_VOICE_4_WAVE_SLC		= Audio_Voice_4,
+	AUDIO_VOICE_4_PITCH         = Audio_Voice_4 + 0x04,
+	AUDIO_VOICE_4_ATTACK	    = Audio_Voice_4 + 0x08,
+	AUDIO_VOICE_4_DECAY         = Audio_Voice_4 + 0x0c,
+	AUDIO_VOICE_4_SUSTAIN     	= Audio_Voice_4 + 0x10,
+	AUDIO_VOICE_4_SUS_DURATION  = Audio_Voice_4 + 0x14,
+	AUDIO_VOICE_4_RELEASE     	= Audio_Voice_4 + 0x20,
+	AUDIO_VOICE_4_VOLUME       	= Audio_Voice_4 + 0x30,
+};
+
+#define Audio_Voice_5			XPAR_AUDIOVOICE_5_S00_AXI_BASEADDR
+enum Audio_Voice_5_Registers {
+	AUDIO_VOICE_5_WAVE_SLC		= Audio_Voice_5,
+	AUDIO_VOICE_5_PITCH         = Audio_Voice_5 + 0x04,
+	AUDIO_VOICE_5_ATTACK	    = Audio_Voice_5 + 0x08,
+	AUDIO_VOICE_5_DECAY         = Audio_Voice_5 + 0x0c,
+	AUDIO_VOICE_5_SUSTAIN     	= Audio_Voice_5 + 0x10,
+	AUDIO_VOICE_5_SUS_DURATION  = Audio_Voice_5 + 0x14,
+	AUDIO_VOICE_5_RELEASE     	= Audio_Voice_5 + 0x20,
+	AUDIO_VOICE_5_VOLUME       	= Audio_Voice_5 + 0x30,
+};
+
+#define Audio_Voice_6			XPAR_AUDIOVOICE_6_S00_AXI_BASEADDR
+enum Audio_Voice_6_Registers {
+	AUDIO_VOICE_6_WAVE_SLC		= Audio_Voice_6,
+	AUDIO_VOICE_6_PITCH         = Audio_Voice_6 + 0x04,
+	AUDIO_VOICE_6_ATTACK	    = Audio_Voice_6 + 0x08,
+	AUDIO_VOICE_6_DECAY         = Audio_Voice_6 + 0x0c,
+	AUDIO_VOICE_6_SUSTAIN     	= Audio_Voice_6 + 0x10,
+	AUDIO_VOICE_6_SUS_DURATION  = Audio_Voice_6 + 0x14,
+	AUDIO_VOICE_6_RELEASE     	= Audio_Voice_6 + 0x20,
+	AUDIO_VOICE_6_VOLUME       	= Audio_Voice_6 + 0x30,
+};
+
+#define Audio_Voice_7			XPAR_AUDIOVOICE_7_S00_AXI_BASEADDR
+enum Audio_Voice_7_Registers {
+	AUDIO_VOICE_7_WAVE_SLC		= Audio_Voice_7,
+	AUDIO_VOICE_7_PITCH         = Audio_Voice_7 + 0x04,
+	AUDIO_VOICE_7_ATTACK	    = Audio_Voice_7 + 0x08,
+	AUDIO_VOICE_7_DECAY         = Audio_Voice_7 + 0x0c,
+	AUDIO_VOICE_7_SUSTAIN     	= Audio_Voice_7 + 0x10,
+	AUDIO_VOICE_7_SUS_DURATION  = Audio_Voice_7 + 0x14,
+	AUDIO_VOICE_7_RELEASE     	= Audio_Voice_7 + 0x20,
+	AUDIO_VOICE_7_VOLUME       	= Audio_Voice_7 + 0x30,
+};
+
+#define Audio_Voice_8			XPAR_AUDIOVOICE_8_S00_AXI_BASEADDR
+enum Audio_Voice_8_Registers {
+	AUDIO_VOICE_8_WAVE_SLC		= Audio_Voice_8,
+	AUDIO_VOICE_8_PITCH         = Audio_Voice_8 + 0x04,
+	AUDIO_VOICE_8_ATTACK	    = Audio_Voice_8 + 0x08,
+	AUDIO_VOICE_8_DECAY         = Audio_Voice_8 + 0x0c,
+	AUDIO_VOICE_8_SUSTAIN     	= Audio_Voice_8 + 0x10,
+	AUDIO_VOICE_8_SUS_DURATION  = Audio_Voice_8 + 0x14,
+	AUDIO_VOICE_8_RELEASE     	= Audio_Voice_8 + 0x20,
+	AUDIO_VOICE_8_VOLUME       	= Audio_Voice_8 + 0x30,
+};
+
+#define Audio_Voice_9			XPAR_AUDIOVOICE_9_S00_AXI_BASEADDR
+enum Audio_Voice_9_Registers {
+	AUDIO_VOICE_9_WAVE_SLC		= Audio_Voice_9,
+	AUDIO_VOICE_9_PITCH         = Audio_Voice_9 + 0x04,
+	AUDIO_VOICE_9_ATTACK	    = Audio_Voice_9 + 0x08,
+	AUDIO_VOICE_9_DECAY         = Audio_Voice_9 + 0x0c,
+	AUDIO_VOICE_9_SUSTAIN     	= Audio_Voice_9 + 0x10,
+	AUDIO_VOICE_9_SUS_DURATION  = Audio_Voice_9 + 0x14,
+	AUDIO_VOICE_9_RELEASE     	= Audio_Voice_9 + 0x20,
+	AUDIO_VOICE_9_VOLUME       	= Audio_Voice_9 + 0x30,
+};
+
+#define Audio_Voice_10			XPAR_AUDIOVOICE_10_S00_AXI_BASEADDR
+enum Audio_Voice_10_Registers {
+	AUDIO_VOICE_10_WAVE_SLC		= Audio_Voice_10,
+	AUDIO_VOICE_10_PITCH        = Audio_Voice_10 + 0x04,
+	AUDIO_VOICE_10_ATTACK	    = Audio_Voice_10 + 0x08,
+	AUDIO_VOICE_10_DECAY        = Audio_Voice_10 + 0x0c,
+	AUDIO_VOICE_10_SUSTAIN     	= Audio_Voice_10 + 0x10,
+	AUDIO_VOICE_10_SUS_DURATION = Audio_Voice_10 + 0x14,
+	AUDIO_VOICE_10_RELEASE     	= Audio_Voice_10 + 0x20,
+	AUDIO_VOICE_10_VOLUME       = Audio_Voice_10 + 0x30,
+};
+
+#define Audio_Voice_11			XPAR_AUDIOVOICE_11_S00_AXI_BASEADDR
+enum Audio_Voice_11_Registers {
+	AUDIO_VOICE_11_WAVE_SLC		= Audio_Voice_11,
+	AUDIO_VOICE_11_PITCH        = Audio_Voice_11 + 0x04,
+	AUDIO_VOICE_11_ATTACK	    = Audio_Voice_11 + 0x08,
+	AUDIO_VOICE_11_DECAY        = Audio_Voice_11 + 0x0c,
+	AUDIO_VOICE_11_SUSTAIN     	= Audio_Voice_11 + 0x10,
+	AUDIO_VOICE_11_SUS_DURATION = Audio_Voice_11 + 0x14,
+	AUDIO_VOICE_11_RELEASE     	= Audio_Voice_11 + 0x20,
+	AUDIO_VOICE_11_VOLUME       = Audio_Voice_11 + 0x30,
+};
+
+#define Audio_Voice_12			XPAR_AUDIOVOICE_12_S00_AXI_BASEADDR
+enum Audio_Voice_12_Registers {
+	AUDIO_VOICE_12_WAVE_SLC		= Audio_Voice_12,
+	AUDIO_VOICE_12_PITCH        = Audio_Voice_12 + 0x04,
+	AUDIO_VOICE_12_ATTACK	    = Audio_Voice_12 + 0x08,
+	AUDIO_VOICE_12_DECAY        = Audio_Voice_12 + 0x0c,
+	AUDIO_VOICE_12_SUSTAIN     	= Audio_Voice_12 + 0x10,
+	AUDIO_VOICE_12_SUS_DURATION = Audio_Voice_12 + 0x14,
+	AUDIO_VOICE_12_RELEASE     	= Audio_Voice_12 + 0x20,
+	AUDIO_VOICE_12_VOLUME       = Audio_Voice_12 + 0x30,
+};
+
+#define Audio_Voice_13			XPAR_AUDIOVOICE_13_S00_AXI_BASEADDR
+enum Audio_Voice_13_Registers {
+	AUDIO_VOICE_13_WAVE_SLC		= Audio_Voice_13,
+	AUDIO_VOICE_13_PITCH        = Audio_Voice_13 + 0x04,
+	AUDIO_VOICE_13_ATTACK	    = Audio_Voice_13 + 0x08,
+	AUDIO_VOICE_13_DECAY        = Audio_Voice_13 + 0x0c,
+	AUDIO_VOICE_13_SUSTAIN     	= Audio_Voice_13 + 0x10,
+	AUDIO_VOICE_13_SUS_DURATION = Audio_Voice_13 + 0x14,
+	AUDIO_VOICE_13_RELEASE     	= Audio_Voice_13 + 0x20,
+	AUDIO_VOICE_13_VOLUME       = Audio_Voice_13 + 0x30,
+};
+
+#define Audio_Voice_14			XPAR_AUDIOVOICE_14_S00_AXI_BASEADDR
+enum Audio_Voice_14_Registers {
+	AUDIO_VOICE_14_WAVE_SLC		= Audio_Voice_14,
+	AUDIO_VOICE_14_PITCH        = Audio_Voice_14 + 0x04,
+	AUDIO_VOICE_14_ATTACK	    = Audio_Voice_14 + 0x08,
+	AUDIO_VOICE_14_DECAY        = Audio_Voice_14 + 0x0c,
+	AUDIO_VOICE_14_SUSTAIN     	= Audio_Voice_14 + 0x10,
+	AUDIO_VOICE_14_SUS_DURATION = Audio_Voice_14 + 0x14,
+	AUDIO_VOICE_14_RELEASE     	= Audio_Voice_14 + 0x20,
+	AUDIO_VOICE_14_VOLUME       = Audio_Voice_14 + 0x30,
+};
+
+#define Audio_Voice_15			XPAR_AUDIOVOICE_15_S00_AXI_BASEADDR
+enum Audio_Voice_15_Registers {
+	AUDIO_VOICE_15_WAVE_SLC		= Audio_Voice_15,
+	AUDIO_VOICE_15_PITCH        = Audio_Voice_15 + 0x04,
+	AUDIO_VOICE_15_ATTACK	    = Audio_Voice_15 + 0x08,
+	AUDIO_VOICE_15_DECAY        = Audio_Voice_15 + 0x0c,
+	AUDIO_VOICE_15_SUSTAIN     	= Audio_Voice_15 + 0x10,
+	AUDIO_VOICE_15_SUS_DURATION = Audio_Voice_15 + 0x14,
+	AUDIO_VOICE_15_RELEASE     	= Audio_Voice_15 + 0x20,
+	AUDIO_VOICE_15_VOLUME       = Audio_Voice_15 + 0x30,
+};
+
+#define Audio_Voice_16			XPAR_AUDIOVOICE_16_S00_AXI_BASEADDR
+enum Audio_Voice_16_Registers {
+	AUDIO_VOICE_16_WAVE_SLC		= Audio_Voice_16,
+	AUDIO_VOICE_16_PITCH        = Audio_Voice_16 + 0x04,
+	AUDIO_VOICE_16_ATTACK	    = Audio_Voice_16 + 0x08,
+	AUDIO_VOICE_16_DECAY        = Audio_Voice_16 + 0x0c,
+	AUDIO_VOICE_16_SUSTAIN     	= Audio_Voice_16 + 0x10,
+	AUDIO_VOICE_16_SUS_DURATION = Audio_Voice_16 + 0x14,
+	AUDIO_VOICE_16_RELEASE     	= Audio_Voice_16 + 0x20,
+	AUDIO_VOICE_16_VOLUME       = Audio_Voice_16 + 0x30,
+};
+
+#define Audio_Voice_17			XPAR_AUDIOVOICE_17_S00_AXI_BASEADDR
+enum Audio_Voice_17_Registers {
+	AUDIO_VOICE_17_WAVE_SLC		= Audio_Voice_17,
+	AUDIO_VOICE_17_PITCH        = Audio_Voice_17 + 0x04,
+	AUDIO_VOICE_17_ATTACK	    = Audio_Voice_17 + 0x08,
+	AUDIO_VOICE_17_DECAY        = Audio_Voice_17 + 0x0c,
+	AUDIO_VOICE_17_SUSTAIN     	= Audio_Voice_17 + 0x10,
+	AUDIO_VOICE_17_SUS_DURATION = Audio_Voice_17 + 0x14,
+	AUDIO_VOICE_17_RELEASE     	= Audio_Voice_17 + 0x20,
+	AUDIO_VOICE_17_VOLUME       = Audio_Voice_17 + 0x30,
+};
+
+#define Audio_Voice_18			XPAR_AUDIOVOICE_18_S00_AXI_BASEADDR
+enum Audio_Voice_18_Registers {
+	AUDIO_VOICE_18_WAVE_SLC		= Audio_Voice_18,
+	AUDIO_VOICE_18_PITCH        = Audio_Voice_18 + 0x04,
+	AUDIO_VOICE_18_ATTACK	    = Audio_Voice_18 + 0x08,
+	AUDIO_VOICE_18_DECAY        = Audio_Voice_18 + 0x0c,
+	AUDIO_VOICE_18_SUSTAIN     	= Audio_Voice_18 + 0x10,
+	AUDIO_VOICE_18_SUS_DURATION = Audio_Voice_18 + 0x14,
+	AUDIO_VOICE_18_RELEASE     	= Audio_Voice_18 + 0x20,
+	AUDIO_VOICE_18_VOLUME       = Audio_Voice_18 + 0x30,
+};
+
+#define Audio_Voice_19			XPAR_AUDIOVOICE_19_S00_AXI_BASEADDR
+enum Audio_Voice_19_Registers {
+	AUDIO_VOICE_19_WAVE_SLC		= Audio_Voice_19,
+	AUDIO_VOICE_19_PITCH        = Audio_Voice_19 + 0x04,
+	AUDIO_VOICE_19_ATTACK	    = Audio_Voice_19 + 0x08,
+	AUDIO_VOICE_19_DECAY        = Audio_Voice_19 + 0x0c,
+	AUDIO_VOICE_19_SUSTAIN     	= Audio_Voice_19 + 0x10,
+	AUDIO_VOICE_19_SUS_DURATION = Audio_Voice_19 + 0x14,
+	AUDIO_VOICE_19_RELEASE     	= Audio_Voice_19 + 0x20,
+	AUDIO_VOICE_19_VOLUME       = Audio_Voice_19 + 0x30,
+};
+
+#define Audio_Voice_20			XPAR_AUDIOVOICE_20_S00_AXI_BASEADDR
+enum Audio_Voice_20_Registers {
+	AUDIO_VOICE_20_WAVE_SLC		= Audio_Voice_20,
+	AUDIO_VOICE_20_PITCH        = Audio_Voice_20 + 0x04,
+	AUDIO_VOICE_20_ATTACK	    = Audio_Voice_20 + 0x08,
+	AUDIO_VOICE_20_DECAY        = Audio_Voice_20 + 0x0c,
+	AUDIO_VOICE_20_SUSTAIN     	= Audio_Voice_20 + 0x10,
+	AUDIO_VOICE_20_SUS_DURATION = Audio_Voice_20 + 0x14,
+	AUDIO_VOICE_20_RELEASE     	= Audio_Voice_20 + 0x20,
+	AUDIO_VOICE_20_VOLUME       = Audio_Voice_20 + 0x30,
+};
+
+#define Audio_Voice_21			XPAR_AUDIOVOICE_21_S00_AXI_BASEADDR
+enum Audio_Voice_21_Registers {
+	AUDIO_VOICE_21_WAVE_SLC		= Audio_Voice_21,
+	AUDIO_VOICE_21_PITCH        = Audio_Voice_21 + 0x04,
+	AUDIO_VOICE_21_ATTACK	    = Audio_Voice_21 + 0x08,
+	AUDIO_VOICE_21_DECAY        = Audio_Voice_21 + 0x0c,
+	AUDIO_VOICE_21_SUSTAIN     	= Audio_Voice_21 + 0x10,
+	AUDIO_VOICE_21_SUS_DURATION = Audio_Voice_21 + 0x14,
+	AUDIO_VOICE_21_RELEASE     	= Audio_Voice_21 + 0x20,
+	AUDIO_VOICE_21_VOLUME       = Audio_Voice_21 + 0x30,
+};
+
+#define Audio_Voice_22			XPAR_AUDIOVOICE_22_S00_AXI_BASEADDR
+enum Audio_Voice_22_Registers {
+	AUDIO_VOICE_22_WAVE_SLC		= Audio_Voice_22,
+	AUDIO_VOICE_22_PITCH        = Audio_Voice_22 + 0x04,
+	AUDIO_VOICE_22_ATTACK	    = Audio_Voice_22 + 0x08,
+	AUDIO_VOICE_22_DECAY        = Audio_Voice_22 + 0x0c,
+	AUDIO_VOICE_22_SUSTAIN     	= Audio_Voice_22 + 0x10,
+	AUDIO_VOICE_22_SUS_DURATION = Audio_Voice_22 + 0x14,
+	AUDIO_VOICE_22_RELEASE     	= Audio_Voice_22 + 0x20,
+	AUDIO_VOICE_22_VOLUME       = Audio_Voice_22 + 0x30,
+};
+
+#define Audio_Voice_23			XPAR_AUDIOVOICE_23_S00_AXI_BASEADDR
+enum Audio_Voice_23_Registers {
+	AUDIO_VOICE_23_WAVE_SLC		= Audio_Voice_23,
+	AUDIO_VOICE_23_PITCH        = Audio_Voice_23 + 0x04,
+	AUDIO_VOICE_23_ATTACK	    = Audio_Voice_23 + 0x08,
+	AUDIO_VOICE_23_DECAY        = Audio_Voice_23 + 0x0c,
+	AUDIO_VOICE_23_SUSTAIN     	= Audio_Voice_23 + 0x10,
+	AUDIO_VOICE_23_SUS_DURATION = Audio_Voice_23 + 0x14,
+	AUDIO_VOICE_23_RELEASE     	= Audio_Voice_23 + 0x20,
+	AUDIO_VOICE_23_VOLUME       = Audio_Voice_23 + 0x30,
+};
+
+#define Audio_Voice_24			XPAR_AUDIOVOICE_24_S00_AXI_BASEADDR
+enum Audio_Voice_24_Registers {
+	AUDIO_VOICE_24_WAVE_SLC		= Audio_Voice_24,
+	AUDIO_VOICE_24_PITCH        = Audio_Voice_24 + 0x04,
+	AUDIO_VOICE_24_ATTACK	    = Audio_Voice_24 + 0x08,
+	AUDIO_VOICE_24_DECAY        = Audio_Voice_24 + 0x0c,
+	AUDIO_VOICE_24_SUSTAIN     	= Audio_Voice_24 + 0x10,
+	AUDIO_VOICE_24_SUS_DURATION = Audio_Voice_24 + 0x14,
+	AUDIO_VOICE_24_RELEASE     	= Audio_Voice_24 + 0x20,
+	AUDIO_VOICE_24_VOLUME       = Audio_Voice_24 + 0x30,
+};
+
+#define Audio_Voice_25			XPAR_AUDIOVOICE_25_S00_AXI_BASEADDR
+enum Audio_Voice_25_Registers {
+	AUDIO_VOICE_25_WAVE_SLC		= Audio_Voice_25,
+	AUDIO_VOICE_25_PITCH        = Audio_Voice_25 + 0x04,
+	AUDIO_VOICE_25_ATTACK	    = Audio_Voice_25 + 0x08,
+	AUDIO_VOICE_25_DECAY        = Audio_Voice_25 + 0x0c,
+	AUDIO_VOICE_25_SUSTAIN     	= Audio_Voice_25 + 0x10,
+	AUDIO_VOICE_25_SUS_DURATION = Audio_Voice_25 + 0x14,
+	AUDIO_VOICE_25_RELEASE     	= Audio_Voice_25 + 0x20,
+	AUDIO_VOICE_25_VOLUME       = Audio_Voice_25 + 0x30,
+};
+
+#define Audio_Voice_26			XPAR_AUDIOVOICE_26_S00_AXI_BASEADDR
+enum Audio_Voice_26_Registers {
+	AUDIO_VOICE_26_WAVE_SLC		= Audio_Voice_26,
+	AUDIO_VOICE_26_PITCH        = Audio_Voice_26 + 0x04,
+	AUDIO_VOICE_26_ATTACK	    = Audio_Voice_26 + 0x08,
+	AUDIO_VOICE_26_DECAY        = Audio_Voice_26 + 0x0c,
+	AUDIO_VOICE_26_SUSTAIN     	= Audio_Voice_26 + 0x10,
+	AUDIO_VOICE_26_SUS_DURATION = Audio_Voice_26 + 0x14,
+	AUDIO_VOICE_26_RELEASE     	= Audio_Voice_26 + 0x20,
+	AUDIO_VOICE_26_VOLUME       = Audio_Voice_26 + 0x30,
+};
+
+#define Audio_Voice_27			XPAR_AUDIOVOICE_27_S00_AXI_BASEADDR
+enum Audio_Voice_27_Registers {
+	AUDIO_VOICE_27_WAVE_SLC		= Audio_Voice_27,
+	AUDIO_VOICE_27_PITCH        = Audio_Voice_27 + 0x04,
+	AUDIO_VOICE_27_ATTACK	    = Audio_Voice_27 + 0x08,
+	AUDIO_VOICE_27_DECAY        = Audio_Voice_27 + 0x0c,
+	AUDIO_VOICE_27_SUSTAIN     	= Audio_Voice_27 + 0x10,
+	AUDIO_VOICE_27_SUS_DURATION = Audio_Voice_27 + 0x14,
+	AUDIO_VOICE_27_RELEASE     	= Audio_Voice_27 + 0x20,
+	AUDIO_VOICE_27_VOLUME       = Audio_Voice_27 + 0x30,
+};
+
+#define Audio_Voice_28			XPAR_AUDIOVOICE_28_S00_AXI_BASEADDR
+enum Audio_Voice_28_Registers {
+	AUDIO_VOICE_28_WAVE_SLC		= Audio_Voice_28,
+	AUDIO_VOICE_28_PITCH        = Audio_Voice_28 + 0x04,
+	AUDIO_VOICE_28_ATTACK	    = Audio_Voice_28 + 0x08,
+	AUDIO_VOICE_28_DECAY        = Audio_Voice_28 + 0x0c,
+	AUDIO_VOICE_28_SUSTAIN     	= Audio_Voice_28 + 0x10,
+	AUDIO_VOICE_28_SUS_DURATION = Audio_Voice_28 + 0x14,
+	AUDIO_VOICE_28_RELEASE     	= Audio_Voice_28 + 0x20,
+	AUDIO_VOICE_28_VOLUME       = Audio_Voice_28 + 0x30,
+};
+
+#define Audio_Voice_29			XPAR_AUDIOVOICE_29_S00_AXI_BASEADDR
+enum Audio_Voice_29_Registers {
+	AUDIO_VOICE_29_WAVE_SLC		= Audio_Voice_29,
+	AUDIO_VOICE_29_PITCH        = Audio_Voice_29 + 0x04,
+	AUDIO_VOICE_29_ATTACK	    = Audio_Voice_29 + 0x08,
+	AUDIO_VOICE_29_DECAY        = Audio_Voice_29 + 0x0c,
+	AUDIO_VOICE_29_SUSTAIN     	= Audio_Voice_29 + 0x10,
+	AUDIO_VOICE_29_SUS_DURATION = Audio_Voice_29 + 0x14,
+	AUDIO_VOICE_29_RELEASE     	= Audio_Voice_29 + 0x20,
+	AUDIO_VOICE_29_VOLUME       = Audio_Voice_29 + 0x30,
+};
+
+#define Audio_Voice_30			XPAR_AUDIOVOICE_30_S00_AXI_BASEADDR
+enum Audio_Voice_30_Registers {
+	AUDIO_VOICE_30_WAVE_SLC		= Audio_Voice_30,
+	AUDIO_VOICE_30_PITCH        = Audio_Voice_30 + 0x04,
+	AUDIO_VOICE_30_ATTACK	    = Audio_Voice_30 + 0x08,
+	AUDIO_VOICE_30_DECAY        = Audio_Voice_30 + 0x0c,
+	AUDIO_VOICE_30_SUSTAIN     	= Audio_Voice_30 + 0x10,
+	AUDIO_VOICE_30_SUS_DURATION = Audio_Voice_30 + 0x14,
+	AUDIO_VOICE_30_RELEASE     	= Audio_Voice_30 + 0x20,
+	AUDIO_VOICE_30_VOLUME       = Audio_Voice_30 + 0x30,
+};
+
+#define Audio_Voice_31			XPAR_AUDIOVOICE_31_S00_AXI_BASEADDR
+enum Audio_Voice_31_Registers {
+	AUDIO_VOICE_31_WAVE_SLC		= Audio_Voice_31,
+	AUDIO_VOICE_31_PITCH        = Audio_Voice_31 + 0x04,
+	AUDIO_VOICE_31_ATTACK	    = Audio_Voice_31 + 0x08,
+	AUDIO_VOICE_31_DECAY        = Audio_Voice_31 + 0x0c,
+	AUDIO_VOICE_31_SUSTAIN     	= Audio_Voice_31 + 0x10,
+	AUDIO_VOICE_31_SUS_DURATION = Audio_Voice_31 + 0x14,
+	AUDIO_VOICE_31_RELEASE     	= Audio_Voice_31 + 0x20,
+	AUDIO_VOICE_31_VOLUME       = Audio_Voice_31 + 0x30,
+};
+
+#define SEQ_0			XPAR_SEQUENCER_0_S00_AXI_BASEADDR
+enum SEQ_0_Registers {
+	SEQUENCE_0			= SEQ_0,
+	SEQUENCE_0_LENGTH   = SEQ_0 + 0x04
+};
+
+#define SEQ_1			XPAR_SEQUENCER_1_S00_AXI_BASEADDR
+enum SEQ_1_Registers {
+	SEQUENCE_1			= SEQ_1,
+	SEQUENCE_1_LENGTH   = SEQ_1 + 0x04
+};
+
+#define SEQ_2			XPAR_SEQUENCER_2_S00_AXI_BASEADDR
+enum SEQ_2_Registers {
+	SEQUENCE_2			= SEQ_2,
+	SEQUENCE_2_LENGTH   = SEQ_2 + 0x04
+};
+
+#define SEQ_3			XPAR_SEQUENCER_3_S00_AXI_BASEADDR
+enum SEQ_3_Registers {
+	SEQUENCE_3			= SEQ_3,
+	SEQUENCE_3_LENGTH   = SEQ_3 + 0x04
+};
+
+#define SEQ_4			XPAR_SEQUENCER_4_S00_AXI_BASEADDR
+enum SEQ_4_Registers {
+	SEQUENCE_4			= SEQ_4,
+	SEQUENCE_4_LENGTH   = SEQ_4 + 0x04
+};
+
+#define SEQ_5			XPAR_SEQUENCER_5_S00_AXI_BASEADDR
+enum SEQ_5_Registers {
+	SEQUENCE_5			= SEQ_5,
+	SEQUENCE_5_LENGTH   = SEQ_5 + 0x04
+};
+
+#define SEQ_6			XPAR_SEQUENCER_6_S00_AXI_BASEADDR
+enum SEQ_6_Registers {
+	SEQUENCE_6			= SEQ_6,
+	SEQUENCE_6_LENGTH   = SEQ_6 + 0x04
+};
+
+#define SEQ_7			XPAR_SEQUENCER_7_S00_AXI_BASEADDR
+enum SEQ_7_Registers {
+	SEQUENCE_7			= SEQ_7,
+	SEQUENCE_7_LENGTH   = SEQ_7 + 0x04
+};
+
+#define SEQ_8			XPAR_SEQUENCER_8_S00_AXI_BASEADDR
+enum SEQ_8_Registers {
+	SEQUENCE_8			= SEQ_8,
+	SEQUENCE_8_LENGTH   = SEQ_8 + 0x04
+};
+
+#define SEQ_9			XPAR_SEQUENCER_9_S00_AXI_BASEADDR
+enum SEQ_9_Registers {
+	SEQUENCE_9			= SEQ_9,
+	SEQUENCE_9_LENGTH   = SEQ_9 + 0x04
+};
+
+#define SEQ_10			XPAR_SEQUENCER_10_S00_AXI_BASEADDR
+enum SEQ_10_Registers {
+	SEQUENCE_10			= SEQ_10,
+	SEQUENCE_10_LENGTH   = SEQ_10 + 0x04
+};
+
+#define SEQ_11			XPAR_SEQUENCER_11_S00_AXI_BASEADDR
+enum SEQ_11_Registers {
+	SEQUENCE_11			= SEQ_11,
+	SEQUENCE_11_LENGTH   = SEQ_11 + 0x04
+};
+
+#define SEQ_12			XPAR_SEQUENCER_12_S00_AXI_BASEADDR
+enum SEQ_12_Registers {
+	SEQUENCE_12			= SEQ_12,
+	SEQUENCE_12_LENGTH   = SEQ_12 + 0x04
+};
+
+#define SEQ_13			XPAR_SEQUENCER_13_S00_AXI_BASEADDR
+enum SEQ_13_Registers {
+	SEQUENCE_13			= SEQ_13,
+	SEQUENCE_13_LENGTH   = SEQ_13 + 0x04
+};
+
+#define SEQ_14			XPAR_SEQUENCER_14_S00_AXI_BASEADDR
+enum SEQ_14_Registers {
+	SEQUENCE_14			= SEQ_14,
+	SEQUENCE_14_LENGTH   = SEQ_14 + 0x04
+};
+
+#define SEQ_15			XPAR_SEQUENCER_15_S00_AXI_BASEADDR
+enum SEQ_15_Registers {
+	SEQUENCE_15			= SEQ_15,
+	SEQUENCE_15_LENGTH   = SEQ_15 + 0x04
+};
+
+#define SEQ_16			XPAR_SEQUENCER_16_S00_AXI_BASEADDR
+enum SEQ_16_Registers {
+	SEQUENCE_16			= SEQ_16,
+	SEQUENCE_16_LENGTH   = SEQ_16 + 0x04
+};
+
+#define SEQ_17			XPAR_SEQUENCER_17_S00_AXI_BASEADDR
+enum SEQ_17_Registers {
+	SEQUENCE_17			= SEQ_17,
+	SEQUENCE_17_LENGTH   = SEQ_17 + 0x04
+};
+
+//Slave address of the ADAU audio controller
+#define IIC_SLAVE_ADDR			0x3B
+
+typedef struct {
+	u8 u8Verbose;
+	u8 fUserIOEvent;
+	u8 fVideoEvent;
+	u8 fAudioRecord;
+	u8 fAudioPlayback;
+	u8 fDmaError;
+	u8 fDmaS2MMEvent;
+	u8 fDmaMM2SEvent;
+	int fDVIClockLock;
+	char chBtn;
+	u8 fLinkEvent;
+	u8 fLinkStatus;
+	int linkSpeed;
+	int mac;
+	XStatus fMacStatus;
+} sDemo_t;
+
+// This variable holds the demo related settings
+volatile sDemo_t Demo;
+
+//Bit field construction
+struct bits {
+	u32 u32bit0:1;
+	u32 u32bit1:1;
+	u32 u32bit2:1;
+	u32 u32bit3:1;
+	u32 u32bit4:1;
+	u32 u32bit5:1;
+	u32 u32bit6:1;
+	u32 u32bit7:1;
+	u32 u32bit8:1;
+	u32 u32bit9:1;
+	u32 u32bit10:1;
+	u32 u32bit11:1;
+	u32 u32bit12:1;
+	u32 u32bit13:1;
+	u32 u32bit14:1;
+	u32 u32bit15:1;
+	u32 u32bit16:1;
+	u32 u32bit17:1;
+	u32 u32bit18:1;
+	u32 u32bit19:1;
+	u32 u32bit20:1;
+	u32 u32bit21:1;
+	u32 u32bit22:1;
+	u32 u32bit23:1;
+	u32 u32bit24:1;
+	u32 u32bit25:1;
+	u32 u32bit26:1;
+	u32 u32bit27:1;
+	u32 u32bit28:1;
+	u32 u32bit29:1;
+	u32 u32bit30:1;
+	u32 u32bit31:1;
+};
+
+union ubitField{
+	u8 rgu8[4];
+	u32 l;
+	struct bits bit;
+};
+
+XStatus fnInitAudio();
+XStatus fnAudioPllConfig();
+XStatus fnAudioStartupConfig();
+XStatus fnAudioWriteToReg(u8 u8RegAddr, u8 u8Data);
+
+void clear_SEQUENCES();
+void set_ATTACK(u16 attack);
+void set_DECAY(u16 decay);
+void set_SUSTAIN(u16 sustain);
+void set_SUSTAIN_DURATION(u16 sustain_duration);
+void set_RELEASE(u16 release);
+void set_VOLUME(u16 volume);
+void set_WAVEFORM(u16 waveform);
+void tune_Oscillators();
+
+
+int main ()
+{
+   static XIntc intc;
+   Xil_ICacheEnable();
+   Xil_DCacheEnable();
+   print("---Entering main---\n\r");
+
+
+   {
+      int status;
+
+      xil_printf("\r\n Running IntcSelfTestExample() for microblaze_0_axi_intc...\r\n");
+
+      status = IntcSelfTestExample(XPAR_MICROBLAZE_0_AXI_INTC_DEVICE_ID);
+
+      if (status == 0) {
+         print("IntcSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("IntcSelfTestExample FAILED\r\n");
+      }
+   }
+
+   {
+       int Status;
+
+       Status = IntcInterruptSetup(&intc, XPAR_MICROBLAZE_0_AXI_INTC_DEVICE_ID);
+       if (Status == 0) {
+          print("Intc Interrupt Setup PASSED\r\n");
+       }
+       else {
+         print("Intc Interrupt Setup FAILED\r\n");
+      }
+   }
+
+
+   /*
+    * Peripheral SelfTest will not be run for axi_uartlite_0
+    * because it has been selected as the STDOUT device
+    */
+
+
+
+
+   {
+      int Status;
+
+
+      print("\r\nRunning I2sSelfTestExample() for i2s_transmitter_0...\r\n");
+
+      Status = I2sSelfTestExample(XPAR_I2S_TRANSMITTER_0_DEVICE_ID);
+
+      if (Status == 0) {
+         print("I2sSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("I2sSelfTestExample FAILED\r\n");
+      }
+   }
+
+
+
+   {
+      u32 status;
+
+      print("\r\nRunning GpioOutputExample() for mb_trigger_regs...\r\n");
+
+      status = GpioOutputExample(XPAR_MB_TRIGGER_REGS_DEVICE_ID,32);
+
+      if (status == 0) {
+         print("GpioOutputExample PASSED.\r\n");
+      }
+      else {
+         print("GpioOutputExample FAILED.\r\n");
+      }
+   }
+
+
+
+   {
+      int status;
+
+
+      print("\r\n Running IicSelfTestExample() for axi_iic_0...\r\n");
+
+      status = IicSelfTestExample(XPAR_AXI_IIC_0_DEVICE_ID);
+
+      if (status == 0) {
+         print("IicSelfTestExample PASSED\r\n");
+      }
+      else {
+         print("IicSelfTestExample FAILED\r\n");
+      }
+   }
+
+
+   print("---Exiting main---\n\r");
+   Xil_DCacheDisable();
+   Xil_ICacheDisable();
+   return 0;
+}
+
+
+
+void clear_SEQUENCES() {
+	Xil_Out32(SEQUENCE_0_LENGTH, 32);
+	Xil_Out32(SEQUENCE_1_LENGTH, 32);
+	Xil_Out32(SEQUENCE_2_LENGTH, 32);
+	Xil_Out32(SEQUENCE_3_LENGTH, 32);
+	Xil_Out32(SEQUENCE_4_LENGTH, 32);
+	Xil_Out32(SEQUENCE_5_LENGTH, 32);
+	Xil_Out32(SEQUENCE_6_LENGTH, 32);
+	Xil_Out32(SEQUENCE_7_LENGTH, 32);
+	Xil_Out32(SEQUENCE_8_LENGTH, 32);
+	Xil_Out32(SEQUENCE_9_LENGTH, 32);
+	Xil_Out32(SEQUENCE_10_LENGTH, 32);
+	Xil_Out32(SEQUENCE_11_LENGTH, 32);
+	Xil_Out32(SEQUENCE_12_LENGTH, 32);
+	Xil_Out32(SEQUENCE_13_LENGTH, 32);
+	Xil_Out32(SEQUENCE_14_LENGTH, 32);
+	Xil_Out32(SEQUENCE_15_LENGTH, 32);
+	Xil_Out32(SEQUENCE_16_LENGTH, 32);
+	Xil_Out32(SEQUENCE_17_LENGTH, 32);
+
+	Xil_Out32(SEQUENCE_0, 	0x00005555);
+	Xil_Out32(SEQUENCE_1, 	0x00000000);
+	Xil_Out32(SEQUENCE_2, 	0x00000000);
+	Xil_Out32(SEQUENCE_3, 	0x00000000);
+	Xil_Out32(SEQUENCE_4, 	0x00000000);
+	Xil_Out32(SEQUENCE_5, 	0x55550000);
+	Xil_Out32(SEQUENCE_6, 	0x00000000);
+	Xil_Out32(SEQUENCE_7, 	0x00005555);
+	Xil_Out32(SEQUENCE_8, 	0x00000000);
+	Xil_Out32(SEQUENCE_9, 	0x55550000);
+	Xil_Out32(SEQUENCE_10, 	0x00000000);
+	Xil_Out32(SEQUENCE_11, 	0x00005555);
+	Xil_Out32(SEQUENCE_12, 	0x55550000);
+	Xil_Out32(SEQUENCE_13, 	0x00000000);
+	Xil_Out32(SEQUENCE_14, 	0x00000000);
+	Xil_Out32(SEQUENCE_15, 	0x00000000);
+	Xil_Out32(SEQUENCE_16, 	0x55550000);
+	Xil_Out32(SEQUENCE_17, 	0x00005555);
+}
+
+
+void set_ATTACK(u16 attack) {
+	Xil_Out16(AUDIO_VOICE_0_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_1_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_2_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_3_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_4_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_5_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_6_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_7_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_8_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_9_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_10_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_11_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_12_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_13_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_14_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_15_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_16_ATTACK, attack);
+	Xil_Out16(AUDIO_VOICE_17_ATTACK, attack);
+}
+void set_DECAY(u16 decay){
+	Xil_Out16(AUDIO_VOICE_0_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_1_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_2_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_3_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_4_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_5_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_6_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_7_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_8_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_9_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_10_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_11_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_12_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_13_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_14_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_15_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_16_DECAY, decay);
+	Xil_Out16(AUDIO_VOICE_17_DECAY, decay);
+}
+void set_SUSTAIN(u16 sustain){
+	Xil_Out16(AUDIO_VOICE_0_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_1_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_2_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_3_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_4_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_5_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_6_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_7_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_8_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_9_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_10_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_11_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_12_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_13_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_14_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_15_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_16_SUSTAIN, sustain);
+	Xil_Out16(AUDIO_VOICE_17_SUSTAIN, sustain);
+}
+void set_SUSTAIN_DURATION(u16 sustain_duration) {
+	Xil_Out16(AUDIO_VOICE_0_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_1_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_2_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_3_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_4_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_5_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_6_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_7_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_8_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_9_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_10_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_11_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_12_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_13_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_14_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_15_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_16_SUS_DURATION, sustain_duration);
+	Xil_Out16(AUDIO_VOICE_17_SUS_DURATION, sustain_duration);
+}
+void set_RELEASE(u16 release){
+	Xil_Out16(AUDIO_VOICE_0_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_1_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_2_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_3_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_4_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_5_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_6_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_7_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_8_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_9_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_10_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_11_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_12_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_13_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_14_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_15_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_16_RELEASE, release);
+	Xil_Out16(AUDIO_VOICE_17_RELEASE, release);
+}
+void set_VOLUME(u16 volume){
+	Xil_Out16(AUDIO_VOICE_0_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_1_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_2_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_3_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_4_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_5_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_6_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_7_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_8_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_9_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_10_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_11_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_12_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_13_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_14_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_15_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_16_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_17_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_18_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_19_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_20_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_21_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_22_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_23_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_24_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_25_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_26_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_27_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_28_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_29_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_30_VOLUME, volume);
+	Xil_Out16(AUDIO_VOICE_31_VOLUME, volume);
+}
+void set_WAVEFORM(u16 waveform){
+	Xil_Out16(AUDIO_VOICE_0_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_1_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_2_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_3_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_4_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_5_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_6_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_7_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_8_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_9_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_10_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_11_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_12_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_13_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_14_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_15_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_16_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_17_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_18_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_19_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_20_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_21_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_22_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_23_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_24_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_25_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_26_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_27_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_28_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_29_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_30_WAVE_SLC, waveform);
+	Xil_Out16(AUDIO_VOICE_31_WAVE_SLC, waveform);
+}
+
+void tune_Oscillators(){
+	volatile u16 pitch;
+
+	pitch = round(96000/(2*130.81)); // pitch = (audio_clk)/(2*freq)
+	Xil_Out16(AUDIO_VOICE_0_PITCH, pitch); //C3
+
+	pitch = round(96000/(2*138.59));
+	Xil_Out16(AUDIO_VOICE_1_PITCH, pitch); //C#
+
+    pitch =  round(96000/(2*146.83));
+	Xil_Out16(AUDIO_VOICE_2_PITCH, pitch); //D
+
+    pitch =  round(96000/(2*155.56));
+	Xil_Out16(AUDIO_VOICE_3_PITCH, pitch); //D#
+
+    pitch =  round(96000/(2*164.81));
+	Xil_Out16(AUDIO_VOICE_4_PITCH, pitch); //E
+
+    pitch =  round(96000/(2*174.61));
+	Xil_Out16(AUDIO_VOICE_5_PITCH, pitch); //F
+
+    pitch =  round(96000/(2*185.00));
+	Xil_Out16(AUDIO_VOICE_6_PITCH, pitch); //F#
+
+    pitch =  round(96000/(2*196.00));
+	Xil_Out16(AUDIO_VOICE_7_PITCH, pitch); //G
+
+	pitch =  round(96000/(2*207.65));
+	Xil_Out16(AUDIO_VOICE_8_PITCH, pitch); //G#
+
+    pitch =  round(96000/(2*220));
+	Xil_Out16(AUDIO_VOICE_9_PITCH, pitch); //A
+
+    pitch =  round(96000/(2*233.08));
+	Xil_Out16(AUDIO_VOICE_10_PITCH, pitch); //A#
+
+    pitch =  round(96000/(2*246.94));
+	Xil_Out16(AUDIO_VOICE_11_PITCH, pitch); //B
+
+    pitch =  round(96000/(2*261.63));
+	Xil_Out16(AUDIO_VOICE_12_PITCH, pitch); //C4 (MIDDLE C)
+
+    pitch =  round(96000/(2*277.18));
+	Xil_Out16(AUDIO_VOICE_13_PITCH, pitch); //C#
+
+    pitch =  round(96000/(2*293.66));
+	Xil_Out16(AUDIO_VOICE_14_PITCH, pitch); //D
+
+    pitch =  round(96000/(2*311.13));
+	Xil_Out16(AUDIO_VOICE_15_PITCH, pitch); //D#
+
+    pitch =  round(96000/(2*329.63));
+	Xil_Out16(AUDIO_VOICE_16_PITCH, pitch); //E
+
+    pitch =  round(96000/(2*349.23));
+	Xil_Out16(AUDIO_VOICE_17_PITCH, pitch); //F
+
+    pitch =  round(96000/(2*369.99));
+	Xil_Out16(AUDIO_VOICE_17_PITCH, pitch); //F#
+
+    pitch =  round(96000/(2*392.00));
+	Xil_Out16(AUDIO_VOICE_18_PITCH, pitch); //G
+
+    pitch =  round(96000/(2*415.30));
+	Xil_Out16(AUDIO_VOICE_19_PITCH, pitch); //G#
+
+    pitch =  round(96000/(2*440.00));
+	Xil_Out16(AUDIO_VOICE_20_PITCH, pitch); //A
+
+    pitch =  round(96000/(2*466.16));
+	Xil_Out16(AUDIO_VOICE_21_PITCH, pitch); //A#
+
+    pitch =  round(96000/(2*493.88));
+	Xil_Out16(AUDIO_VOICE_22_PITCH, pitch); //B
+
+    pitch =  round(96000/(2*523.25));
+	Xil_Out16(AUDIO_VOICE_23_PITCH, pitch); //C
+
+    pitch =  round(96000/(2*554.37));
+	Xil_Out16(AUDIO_VOICE_24_PITCH, pitch); //C#
+
+    pitch =  round(96000/(2*587.33));
+	Xil_Out16(AUDIO_VOICE_25_PITCH, pitch); //D
+
+    pitch =  round(96000/(2*622.25));
+	Xil_Out16(AUDIO_VOICE_26_PITCH, pitch); //D#
+
+    pitch =  round(96000/(2*659.25));
+	Xil_Out16(AUDIO_VOICE_27_PITCH, pitch); //E
+
+    pitch =  round(96000/(2*698.46));
+	Xil_Out16(AUDIO_VOICE_28_PITCH, pitch); //F
+
+    pitch =  round(96000/(2*739.99));
+	Xil_Out16(AUDIO_VOICE_29_PITCH, pitch); //F#
+
+    pitch =  round(96000/(2*783.99));
+	Xil_Out16(AUDIO_VOICE_30_PITCH, pitch); //G
+
+    pitch =  round(96000/(2*830.61));
+	Xil_Out16(AUDIO_VOICE_31_PITCH, pitch); //G#
+}
+
+XStatus fnInitAudio()
+{
+	int Status;
+
+	//Set the PLL and wait for Lock
+	Status = fnAudioPllConfig();
+	if (Status != XST_SUCCESS)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: Could not lock PLL");
+		}
+	}
+
+	//Configure the ADAU registers
+	Status = fnAudioStartupConfig();
+	if (Status != XST_SUCCESS)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: Failed I2C Configuration");
+		}
+	}
+
+
+	Demo.fAudioPlayback = 0;
+	Demo.fAudioRecord = 0;
+
+	return XST_SUCCESS;
+}
+
+XStatus fnAudioPllConfig() {
+
+//START OF AUDIO CODEC START UP PROCEDURE
+	u8 u8TxData[8], u8RxData[6];
+	int Status;
+
+	//CLKSRC = PLL CLK, INFREQ = 1024*Fs, COREN = DISABLED
+	Status = fnAudioWriteToReg(R0_CLOCK_CONTROL, 0x0E);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R0_CLOCK_CONTROL (0x0E)");
+		}
+		return XST_FAILURE;
+	}
+
+	// Write 6 bytes to R1
+	// For setting the PLL with a MCLK = 12.288 MHz the datasheet suggests the
+	// following configuration 0xXXXXXX2001
+	u8TxData[0] = 0x40;
+	u8TxData[1] = 0x02;
+	u8TxData[2] = 0x00; // byte 1 MSB of M = 0
+	u8TxData[3] = 0x7D; // byte 2 LSB of M = 0d125
+	u8TxData[4] = 0x00; // byte 3 MSB of N = 0
+	u8TxData[5] = 0x0C; // byte 4 LSB of N = 0d12
+	u8TxData[6] = 0x20; // byte 5 (0x20 = 0b0010_0000 = 0bX_0100_00_0) R = 4, X = 1, PLL Type = Unlocked
+	u8TxData[7] = 0x01; // byte 6 PLL = ENABLED
+
+	Status = XIic_Send(XPAR_IIC_0_BASEADDR, IIC_SLAVE_ADDR, u8TxData, 8, XIIC_STOP);
+	if (Status != 8)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not send data to R1_PLL_CONTROL (0xXXXXXX2001)");
+		}
+		return XST_FAILURE;
+	}
+	// Poll PLL Lock bit
+	u8TxData[0] = 0x40;
+	u8TxData[1] = 0x02;
+
+	//Wait for the PLL to lock
+	do {
+		XIic_Send(XPAR_IIC_0_BASEADDR, IIC_SLAVE_ADDR, u8TxData, 2, XIIC_STOP);
+
+		XIic_Recv(XPAR_IIC_0_BASEADDR, IIC_SLAVE_ADDR, u8RxData, 6, XIIC_STOP);
+		if(Demo.u8Verbose) {
+			xil_printf("\nAudio PLL R1 = 0x%x%x%x%x%x%x", u8RxData[0], u8RxData[1],
+				u8RxData[2], u8RxData[3], u8RxData[4], u8RxData[5]);
+		}
+	}
+	while((u8RxData[5] & 0x02) == 0);
+
+	//Set COREN
+	Status = fnAudioWriteToReg(R0_CLOCK_CONTROL, 0x0F);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R0_CLOCK_CONTROL (0x0F)");
+		}
+		return XST_FAILURE;
+	}
+
+	return XST_SUCCESS;
+}
+//END OF AUDIO CODEC START UP PROCEDURE
+
+XStatus fnAudioStartupConfig ()
+{
+
+	union ubitField uConfigurationVariable;
+	int Status;
+
+	// Configure the I2S controller for generating a valid sampling rate
+	uConfigurationVariable.l = Xil_In32(I2S_TIMING_CONTROL_REG);
+	uConfigurationVariable.bit.u32bit0 = 1;
+	uConfigurationVariable.bit.u32bit1 = 0;
+	uConfigurationVariable.bit.u32bit2 = 1;
+	Xil_Out32(I2S_TIMING_CONTROL_REG, 0x00000004);
+
+	uConfigurationVariable.l = 0x00000000;
+/*
+	//STOP_TRANSACTION
+	uConfigurationVariable.bit.u32bit1 = 1;
+	Xil_Out32(I2S_TRANSFER_CONTROL_REG, uConfigurationVariable.l);
+
+	//STOP_TRANSACTION
+	uConfigurationVariable.bit.u32bit1 = 0;
+	Xil_Out32(I2S_TRANSFER_CONTROL_REG, uConfigurationVariable.l);
+*/
+	//slave: I2S
+	Status = fnAudioWriteToReg(R15_SERIAL_PORT_CONTROL_0, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R15_SERIAL_PORT_CONTROL_0 (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//64 bit audio frame(L+R)
+	Status = fnAudioWriteToReg(R16_SERIAL_PORT_CONTROL_1, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R16_SERIAL_PORT_CONTROL_1 (0x00)");
+		}
+		return XST_FAILURE;
+	}
+	//ADC, DAC sampling rate to 48KHz
+	Status = fnAudioWriteToReg(R17_CONVERTER_CONTROL_0, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R17_CONVERTER_CONTROL_0 (0x00)");
+		}
+		return XST_FAILURE;
+	}
+	//ADC, DAC sampling rate to 48KHz
+	Status = fnAudioWriteToReg(R64_SERIAL_PORT_SAMPLING_RATE, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R64_SERIAL_PORT_SAMPLING_RATE (0x00)");
+		}
+		return XST_FAILURE;
+	}
+	//ADC are both connected, normal mic polarity
+	Status = fnAudioWriteToReg(R19_ADC_CONTROL, 0x13);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R19_ADC_CONTROL (0x13)");
+		}
+		return XST_FAILURE;
+	}
+	//DAC are both connected
+	Status = fnAudioWriteToReg(R36_DAC_CONTROL_0, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R36_DAC_CONTROL_0 (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//Enabling both channels
+	Status = fnAudioWriteToReg(R35_PLAYBACK_POWER_MANAGEMENT, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R35_PLAYBACK_POWER_MANAGEMENT (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//Serial input [L0,R0] to DAC
+	Status = fnAudioWriteToReg(R58_SERIAL_INPUT_ROUTE_CONTROL, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R58_SERIAL_INPUT_ROUTE_CONTROL (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//Enable all digital circuits except Codec slew
+	Status = fnAudioWriteToReg(R65_CLOCK_ENABLE_0, 0x7F);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R65_CLOCK_ENABLE_0 (0x7F)");
+		}
+		return XST_FAILURE;
+	}
+	//Turns on CLK0 and CLK1
+	Status = fnAudioWriteToReg(R66_CLOCK_ENABLE_1, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R66_CLOCK_ENABLE_1 (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//Mixer5 0dB
+	Status = fnAudioWriteToReg(R26_PLAYBACK_LR_MIXER_LEFT_LINE_OUTPUT_CONTROL, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R26_PLAYBACK_LR_MIXER_LEFT_LINE_OUTPUT_CONTROL (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//Mixer7 enabled
+	Status = fnAudioWriteToReg(R28_PLAYBACK_LR_MIXER_MONO_OUTPUT_CONTROL, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R28_PLAYBACK_LR_MIXER_MONO_OUTPUT_CONTROL (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//Mixer6 0dB
+	Status = fnAudioWriteToReg(R27_PLAYBACK_LR_MIXER_RIGHT_LINE_OUTPUT_CONTROL, 0x09);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R27_PLAYBACK_LR_MIXER_RIGHT_LINE_OUTPUT_CONTROL (0x09)");
+		}
+		return XST_FAILURE;
+	}
+	//Left output: 0db Line out
+	Status = fnAudioWriteToReg(R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL, 0xE6);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R31_PLAYBACK_LINE_OUTPUT_LEFT_VOLUME_CONTROL (0xE6)");
+		}
+		return XST_FAILURE;
+	}
+	//Right output: 0db Line out
+	Status = fnAudioWriteToReg(R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL, 0xE6);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R32_PLAYBACK_LINE_OUTPUT_RIGHT_VOLUME_CONTROL (0xE6)");
+		}
+		return XST_FAILURE;
+	}
+	//Mono output: -57 dB unmute HP out
+	Status = fnAudioWriteToReg(R33_PLAYBACK_MONO_OUTPUT_CONTROL, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R33_PLAYBACK_MONO_OUTPUT_CONTROL (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//Mic bias 90%
+	Status = fnAudioWriteToReg(R10_RECORD_MICROPHONE_BIAS_CONTROL, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R10_RECORD_MICROPHONE_BIAS_CONTROL (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//enable pop and click suppression
+	Status = fnAudioWriteToReg(R34_PLAYBACK_POP_CLICK_SUPPRESSION, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R34_PLAYBACK_POP_CLICK_SUPPRESSION (0x00)");
+		}
+		return XST_FAILURE;
+	}
+	//enable Left headphone and set 0dB
+	Status = fnAudioWriteToReg(R29_PLAYBACK_HEADPHONE_LEFT_VOLUME_CONTROL, 0xE7);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R29_PLAYBACK_HEADPHONE_LEFT_VOLUME_CONTROL (0xE7)");
+		}
+		return XST_FAILURE;
+	}
+	//enable Right headphone and set 0dB
+	Status = fnAudioWriteToReg(R30_PLAYBACK_HEADPHONE_RIGHT_VOLUME_CONTROL, 0xE7);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R30_PLAYBACK_HEADPHONE_RIGHT_VOLUME_CONTROL (0xE7)");
+		}
+		return XST_FAILURE;
+	}
+	//enable Mixer1, mute left single ended
+	Status = fnAudioWriteToReg(R4_RECORD_MIXER_LEFT_CONTROL_0, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R4_RECORD_MIXER_LEFT_CONTROL_0 (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//enable MixerAux1, mute left differential input
+	Status = fnAudioWriteToReg(R5_RECORD_MIXER_LEFT_CONTROL_1, 0x0D);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R5_RECORD_MIXER_LEFT_CONTROL_1 (0x0D)");
+		}
+		return XST_FAILURE;
+	}
+	//enable Mixer2, mute right single ende
+	Status = fnAudioWriteToReg(R6_RECORD_MIXER_RIGHT_CONTROL_0, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R6_RECORD_MIXER_RIGHT_CONTROL_0 (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//enable MixerAux2, mute right differential input
+	Status = fnAudioWriteToReg(R7_RECORD_MIXER_RIGHT_CONTROL_1, 0x05);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R7_RECORD_MIXER_RIGHT_CONTROL_1 (0x05)");
+		}
+		return XST_FAILURE;
+	}
+	//disable Left differential input
+	Status = fnAudioWriteToReg(R8_LEFT_DIFFERENTIAL_INPUT_VOLUME_CONTROL, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R8_LEFT_DIFFERENTIAL_INPUT_VOLUME_CONTROL (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//disable right differential input
+	Status = fnAudioWriteToReg(R9_RIGHT_DIFFERENTIAL_INPUT_VOLUME_CONTROL, 0x03);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R9_RIGHT_DIFFERENTIAL_INPUT_VOLUME_CONTROL (0x03)");
+		}
+		return XST_FAILURE;
+	}
+	//Enable Mixer3 with the the left DAC channel, mute MixerAux3
+	Status = fnAudioWriteToReg(R22_PLAYBACK_MIXER_LEFT_CONTROL_0, 0x21);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R22_PLAYBACK_MIXER_LEFT_CONTROL_0 (0x21)");
+		}
+		return XST_FAILURE;
+	}
+	//Mute Right and Left input mixers
+	Status = fnAudioWriteToReg(R23_PLAYBACK_MIXER_LEFT_CONTROL_1, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R23_PLAYBACK_MIXER_LEFT_CONTROL_1 (0x00)");
+		}
+		return XST_FAILURE;
+	}
+	//Enable Mixer4 with the the right DAC channel, mute MixerAux4
+	Status = fnAudioWriteToReg(R24_PLAYBACK_MIXER_RIGHT_CONTROL_0, 0x41);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R24_PLAYBACK_MIXER_RIGHT_CONTROL_0 (0x41)");
+		}
+		return XST_FAILURE;
+	}
+	//Mute Right and Left input mixers
+	Status = fnAudioWriteToReg(R25_PLAYBACK_MIXER_RIGHT_CONTROL_1, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R25_PLAYBACK_MIXER_RIGHT_CONTROL_1 (0x00)");
+		}
+		return XST_FAILURE;
+	}
+	//Serial output to L0 R0
+	Status = fnAudioWriteToReg(R59_SERIAL_OUTPUT_ROUTE_CONTROL, 0x01);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R59_SERIAL_OUTPUT_ROUTE_CONTROL (0x01)");
+		}
+		return XST_FAILURE;
+	}
+	//Enable LRCLK and BLCK
+	Status = fnAudioWriteToReg(R60_SERIAL_DATA_GPIO_CONGIURATION, 0x00);
+	if (Status == XST_FAILURE)
+	{
+		if (Demo.u8Verbose)
+		{
+			xil_printf("\r\nError: could not write R60_SERIAL_DATA_GPIO_CONGIURATION (0x00)");
+		}
+		return XST_FAILURE;
+	}
+
+
+	return XST_SUCCESS;
+}
+
+XStatus fnAudioWriteToReg(u8 u8RegAddr, u8 u8Data) {
+
+	u8 u8TxData[3];
+	u8 u8BytesSent;
+
+	u8TxData[0] = 0x40;
+	u8TxData[1] = u8RegAddr;
+	u8TxData[2] = u8Data;
+
+	u8BytesSent = XIic_Send(XPAR_IIC_0_BASEADDR, IIC_SLAVE_ADDR, u8TxData, 3, XIIC_STOP);
+
+	//check if all the bytes where sent
+	if (u8BytesSent != 3)
+	{
+		return XST_FAILURE;
+	}
+
+	return XST_SUCCESS;
+}
