@@ -1,0 +1,5 @@
+
+| 0 | Tempo Rate | Bit width based on parameter |
+| 1 | Unused | |
+| 2 | Unused | |
+| 3 | Unused | |

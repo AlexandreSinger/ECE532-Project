@@ -1,0 +1,181 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0xEAA701DBBB75AEB5",
+      "device": "xc7a200tsbg484-1",
+      "name": "design_1",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2018.3.1",
+      "validated": "true"
+    },
+    "design_tree": {
+      "Sequencer_0": "",
+      "TempoGenerator_0": ""
+    },
+    "ports": {
+      "trigger": {
+        "direction": "O"
+      },
+      "aclk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "ASSOCIATED_RESET": {
+            "value": "aresetn",
+            "value_src": "default"
+          },
+          "CLK_DOMAIN": {
+            "value": "design_1_aclk_0",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "100000000",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
+      },
+      "aresetn": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "POLARITY": {
+            "value": "ACTIVE_LOW",
+            "value_src": "default"
+          }
+        }
+      },
+      "fast_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_fast_clk_0",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "100000000",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
+      },
+      "audio_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_audio_clk_0",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "48000"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
+      },
+      "resetn": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "POLARITY": {
+            "value": "ACTIVE_LOW",
+            "value_src": "default"
+          }
+        }
+      }
+    },
+    "components": {
+      "Sequencer_0": {
+        "vlnv": "utoronto.ca:user:Sequencer:2.0",
+        "xci_name": "design_1_Sequencer_0_1"
+      },
+      "TempoGenerator_0": {
+        "vlnv": "utoronto.ca:user:TempoGenerator:1.0",
+        "xci_name": "design_1_TempoGenerator_0_0",
+        "parameters": {
+          "TEMPO_RATE_DEFAULT_VALUE": {
+            "value": "0"
+          }
+        }
+      }
+    },
+    "nets": {
+      "audio_clk_0_1": {
+        "ports": [
+          "audio_clk",
+          "TempoGenerator_0/audio_clk"
+        ]
+      },
+      "TempoGenerator_0_tempo_pulse": {
+        "ports": [
+          "TempoGenerator_0/tempo_pulse",
+          "Sequencer_0/tempo_pulse"
+        ]
+      },
+      "aclk_1": {
+        "ports": [
+          "aclk",
+          "Sequencer_0/s00_axi_aclk",
+          "TempoGenerator_0/s00_axi_aclk"
+        ]
+      },
+      "aresetn_1": {
+        "ports": [
+          "aresetn",
+          "Sequencer_0/s00_axi_aresetn",
+          "TempoGenerator_0/s00_axi_aresetn"
+        ]
+      },
+      "resetn_1": {
+        "ports": [
+          "resetn",
+          "Sequencer_0/resetn",
+          "TempoGenerator_0/resetn"
+        ]
+      },
+      "fast_clk_1": {
+        "ports": [
+          "fast_clk",
+          "Sequencer_0/fast_clk",
+          "TempoGenerator_0/clk"
+        ]
+      },
+      "Sequencer_0_trigger": {
+        "ports": [
+          "Sequencer_0/trigger",
+          "trigger"
+        ]
+      }
+    }
+  }
+}

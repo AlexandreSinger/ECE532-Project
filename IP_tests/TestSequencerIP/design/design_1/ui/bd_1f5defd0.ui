@@ -1,0 +1,23 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS-threadsafe
+#  -string -flagsOSRD
+preplace port resetn -pg 1 -y 130 -defaultsOSRD
+preplace port trigger -pg 1 -y 220 -defaultsOSRD
+preplace port audio_clk -pg 1 -y 110 -defaultsOSRD
+preplace port aclk -pg 1 -y 150 -defaultsOSRD
+preplace port fast_clk -pg 1 -y 20 -defaultsOSRD
+preplace port aresetn -pg 1 -y 170 -defaultsOSRD
+preplace inst TempoGenerator_0 -pg 1 -lvl 1 -y 120 -defaultsOSRD
+preplace inst Sequencer_0 -pg 1 -lvl 2 -y 220 -defaultsOSRD
+preplace netloc Sequencer_0_trigger 1 2 1 N
+preplace netloc TempoGenerator_0_tempo_pulse 1 1 1 310
+preplace netloc audio_clk_0_1 1 0 1 NJ
+preplace netloc resetn_1 1 0 2 40 240 330J
+preplace netloc aresetn_1 1 0 2 10 270 NJ
+preplace netloc fast_clk_1 1 0 2 20 230 300J
+preplace netloc aclk_1 1 0 2 30 10 320J
+levelinfo -pg 1 -10 170 440 570 -top 0 -bot 330
+"
+}
+0

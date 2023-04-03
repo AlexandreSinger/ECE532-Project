@@ -1,0 +1,23 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port audio_resetn -pg 1 -y 20 -defaultsOSRD
+preplace port trigger -pg 1 -y 170 -defaultsOSRD
+preplace port audio_clk -pg 1 -y 100 -defaultsOSRD
+preplace port aclk -pg 1 -y 80 -defaultsOSRD
+preplace port aresetn -pg 1 -y 210 -defaultsOSRD
+preplace portBus sample -pg 1 -y 150 -defaultsOSRD
+preplace inst AudioPulseGen_0 -pg 1 -lvl 1 -y 90 -defaultsOSRD
+preplace inst AudioVoice_0 -pg 1 -lvl 2 -y 150 -defaultsOSRD
+preplace netloc AudioPulseGen_0_audio_pulse 1 1 1 240
+preplace netloc audio_clk_0_1 1 0 1 NJ
+preplace netloc AudioVoice_0_sample 1 2 1 N
+preplace netloc clk_0_1 1 0 2 20 10 260
+preplace netloc s00_axi_aresetn_0_1 1 0 2 NJ 210 NJ
+preplace netloc resetn_0_1 1 0 2 NJ 20 250J
+preplace netloc trigger_0_1 1 0 2 NJ 170 NJ
+levelinfo -pg 1 0 130 390 540 -top 0 -bot 270
+"
+}
+

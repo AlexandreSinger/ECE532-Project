@@ -1,0 +1,5 @@
+| Register | Parameter | Bit Width |
+| 0 | Sequence | 32 bit |
+| 1 | Sequence Length | 32 bits |
+
+Note: The registers are 32 bit, but the parameters in the module decide how many bits each of the parameters have!

@@ -1,0 +1,168 @@
+{
+  "design": {
+    "design_info": {
+      "boundary_crc": "0xC08579721052BBF5",
+      "device": "xc7a200tsbg484-1",
+      "name": "design_1",
+      "synth_flow_mode": "Hierarchical",
+      "tool_version": "2018.3.1",
+      "validated": "true"
+    },
+    "design_tree": {
+      "sample_to_audio_stre_0": "",
+      "AudioPulseGen_0": ""
+    },
+    "ports": {
+      "tid": {
+        "direction": "O",
+        "left": "2",
+        "right": "0"
+      },
+      "tdata": {
+        "direction": "O",
+        "left": "31",
+        "right": "0"
+      },
+      "tvalid": {
+        "direction": "O"
+      },
+      "tready": {
+        "direction": "I"
+      },
+      "aclk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "ASSOCIATED_RESET": {
+            "value": "aresetn",
+            "value_src": "default"
+          },
+          "CLK_DOMAIN": {
+            "value": "design_1_m00_axis_aud_aclk_0",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "100000000",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
+      },
+      "aresetn": {
+        "type": "rst",
+        "direction": "I",
+        "parameters": {
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "POLARITY": {
+            "value": "ACTIVE_LOW",
+            "value_src": "default"
+          }
+        }
+      },
+      "audio_clk": {
+        "type": "clk",
+        "direction": "I",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "design_1_audio_clk_0",
+            "value_src": "default"
+          },
+          "FREQ_HZ": {
+            "value": "100000000",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.000",
+            "value_src": "default"
+          }
+        }
+      },
+      "sample_to_send": {
+        "direction": "I",
+        "left": "15",
+        "right": "0"
+      }
+    },
+    "components": {
+      "sample_to_audio_stre_0": {
+        "vlnv": "utoronto.ca:user:sample_to_audio_stream:2.0",
+        "xci_name": "design_1_sample_to_audio_stre_0_0"
+      },
+      "AudioPulseGen_0": {
+        "vlnv": "utoronto.ca:user:AudioPulseGen:1.0",
+        "xci_name": "design_1_AudioPulseGen_0_0"
+      }
+    },
+    "nets": {
+      "sample_to_audio_stre_0_m00_axis_aud_tid": {
+        "ports": [
+          "sample_to_audio_stre_0/m00_axis_aud_tid",
+          "tid"
+        ]
+      },
+      "sample_to_audio_stre_0_m00_axis_aud_tdata": {
+        "ports": [
+          "sample_to_audio_stre_0/m00_axis_aud_tdata",
+          "tdata"
+        ]
+      },
+      "sample_to_audio_stre_0_m00_axis_aud_tvalid": {
+        "ports": [
+          "sample_to_audio_stre_0/m00_axis_aud_tvalid",
+          "tvalid"
+        ]
+      },
+      "m00_axis_aud_tready_0_1": {
+        "ports": [
+          "tready",
+          "sample_to_audio_stre_0/m00_axis_aud_tready"
+        ]
+      },
+      "m00_axis_aud_aclk_0_1": {
+        "ports": [
+          "aclk",
+          "sample_to_audio_stre_0/m00_axis_aud_aclk",
+          "AudioPulseGen_0/clk"
+        ]
+      },
+      "m00_axis_aud_aresetn_0_1": {
+        "ports": [
+          "aresetn",
+          "sample_to_audio_stre_0/m00_axis_aud_aresetn"
+        ]
+      },
+      "audio_clk_0_1": {
+        "ports": [
+          "audio_clk",
+          "AudioPulseGen_0/audio_clk"
+        ]
+      },
+      "sample_to_send_0_1": {
+        "ports": [
+          "sample_to_send",
+          "sample_to_audio_stre_0/sample_to_send"
+        ]
+      },
+      "AudioPulseGen_0_audio_pulse": {
+        "ports": [
+          "AudioPulseGen_0/audio_pulse",
+          "sample_to_audio_stre_0/enable"
+        ]
+      }
+    }
+  }
+}

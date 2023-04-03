@@ -1,0 +1,27 @@
+{
+   "ExpandedHierarchyInLayout":"",
+   "guistr":"# # String gsaved with Nlview 6.8.11  2018-08-07 bk=1.4403 VDI=40 GEI=35 GUI=JA:9.0 non-TLS
+#  -string -flagsOSRD
+preplace port tvalid -pg 1 -y 180 -defaultsOSRD
+preplace port audio_clk -pg 1 -y 90 -defaultsOSRD
+preplace port tready -pg 1 -y 260 -defaultsOSRD
+preplace port aclk -pg 1 -y 20 -defaultsOSRD
+preplace port aresetn -pg 1 -y 150 -defaultsOSRD
+preplace portBus tdata -pg 1 -y 160 -defaultsOSRD
+preplace portBus tid -pg 1 -y 140 -defaultsOSRD
+preplace portBus sample_to_send -pg 1 -y 190 -defaultsOSRD
+preplace inst sample_to_audio_stre_0 -pg 1 -lvl 2 -y 160 -defaultsOSRD
+preplace inst AudioPulseGen_0 -pg 1 -lvl 1 -y 80 -defaultsOSRD
+preplace netloc AudioPulseGen_0_audio_pulse 1 1 1 240
+preplace netloc audio_clk_0_1 1 0 1 NJ
+preplace netloc sample_to_audio_stre_0_m00_axis_aud_tdata 1 2 1 NJ
+preplace netloc sample_to_audio_stre_0_m00_axis_aud_tid 1 2 1 NJ
+preplace netloc m00_axis_aud_aresetn_0_1 1 0 2 NJ 150 NJ
+preplace netloc m00_axis_aud_aclk_0_1 1 0 2 20 10 250J
+preplace netloc sample_to_send_0_1 1 0 2 NJ 190 NJ
+preplace netloc m00_axis_aud_tready_0_1 1 0 3 NJ 260 NJ 260 630
+preplace netloc sample_to_audio_stre_0_m00_axis_aud_tvalid 1 2 1 NJ
+levelinfo -pg 1 0 130 440 650 -top 0 -bot 280
+"
+}
+0

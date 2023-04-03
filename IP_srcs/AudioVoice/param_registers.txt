@@ -1,0 +1,11 @@
+|register | param | bit width |
+| 0 | Wave select | [1:0] |
+| 1 | Pitch | [15:0] |
+| 2 | ADSR Attack | [15:0] |
+| 3 | ADSR Decay | [15:0] |
+| 4 | ADSR Sustain | [15:0] |
+| 5 | ADSR Sustain Duration | [15:0] |
+| 6 | ADSR Release | [15:0] |
+| 7 | Volume | [15:0] |
+
+Registers need to be at least 16 bits in length
