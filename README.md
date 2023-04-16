@@ -38,7 +38,10 @@ useful for debugging issues with the AXI protocol.
 
 Directory containing the documentation for MusiLinx including the Final Report and a video demonstrating the project.
 The Final Report is a deep dive into the motivation, design, and future of the project.
-The video is a demonstration of MusiLinx and its different modes.
+The video is a demonstration of MusiLinx and its different modes. The video can also be found in a dropbox
+found here:
+
+[https://www.dropbox.com/s/gs4mt61os3g1xrf/MusiLinxVideo.mp4?dl=0](https://www.dropbox.com/s/gs4mt61os3g1xrf/MusiLinxVideo.mp4?dl=0)
 
 ## Authors
 Alexandre Singer
